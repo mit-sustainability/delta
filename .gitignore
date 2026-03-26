@@ -1,0 +1,28 @@
+.envrc
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments and packaging artifacts
+.venv/
+venv/
+*.egg-info/
+
+# Local runtime state
+.dagster/
+logs/
+
+# dbt local and generated artifacts
+dbt/.user.yml
+dbt/logs/
+dbt/target/
+
+# OS and notebook noise
+.DS_Store
+.ipynb_checkpoints/
