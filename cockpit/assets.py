@@ -1,18 +1,18 @@
-from dagster import AssetExecutionContext, AssetKey
+from dagster import AssetExecutionContext
 from dagster_dbt import DbtCliResource, dbt_assets
 
 from .project import delta_dbt_project
 
-# Postgres Assets (Local Dev)
+# PostgreSQL-backed dbt assets for local development and test workflows.
 @dbt_assets(
     manifest=delta_dbt_project.manifest_path,
     select="*",
     key_prefix="postgres",
 )
 def postgres_dbt_assets(context: AssetExecutionContext, dbt_postgres: DbtCliResource):
-    yield from dbt_postgres.cli(["build", "--target", "dev"], context=context).stream()
+    yield from dbt_postgres.cli(["build", "--target", "local"], context=context).stream()
 
-# Snowflake Assets (Production Backend)
+# Snowflake-backed dbt assets for target-state production runs.
 @dbt_assets(
     manifest=delta_dbt_project.manifest_path,
     select="*",

@@ -19,15 +19,16 @@ To use Snowflake Git integration for notebooks:
 ## Local Development
 
 ```bash
-# 1. Install dependencies
-pip install -e ".[dev]"
+# 1. Install dependencies in a Python 3.13 environment
+uv sync --python 3.13
 
-# 2. Initialize local dev database + schemas on your existing local Postgres (default: localhost:5432)
+# 2. Initialize local development database + schemas on Postgres (default: localhost:5432)
 make init-db
 
-# 3. Build dbt manifest (if not automatically handled)
+# 3. Build dbt dependencies and run the local target
 cd dbt
 dbt deps
+DBT_TARGET=local dbt build
 
 # 4. Start Dagster local development server
 cd ..
@@ -37,23 +38,41 @@ dagster dev
 ## Environment Targets
 
 `dbt/profiles.yml` already maps targets as:
-- `dev` -> PostgreSQL (local, from `POSTGRES_*` env vars)
+- `local` -> PostgreSQL (local or test, from `POSTGRES_*` env vars)
 - `prod` -> Snowflake (from `SNOWFLAKE_*` env vars)
 
 Use `.envrc` for local defaults:
-- `DBT_TARGET=dev`
+- `DBT_TARGET=local`
 - `POSTGRES_PORT=5432`
 
-Switch to production runs explicitly:
+Switch targets explicitly:
+
+```bash
+export DBT_TARGET=local
+dbt build
+```
 
 ```bash
 export DBT_TARGET=prod
 export SNOWFLAKE_ACCOUNT=...
 export SNOWFLAKE_USER=...
-export SNOWFLAKE_PASSWORD=...
 export SNOWFLAKE_ROLE=...
 export SNOWFLAKE_DATABASE=...
 export SNOWFLAKE_WAREHOUSE=...
 ```
 
-Then run `dbt build` (or Dagster Snowflake assets) against Snowflake.
+If you want password authentication for non-interactive production runs, add:
+
+```bash
+export SNOWFLAKE_PASSWORD=...
+export SNOWFLAKE_AUTHENTICATOR=snowflake
+```
+
+If you prefer browser-based authentication locally, leave `SNOWFLAKE_PASSWORD` unset and keep `SNOWFLAKE_AUTHENTICATOR` unset or set it to `externalbrowser`.
+
+For convenience, you can also use:
+
+```bash
+make dbt-build-local
+make dbt-build-prod
+```

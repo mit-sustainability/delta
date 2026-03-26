@@ -1,4 +1,4 @@
-.PHONY: setup init-db dev test dbt-deps docker-build clean
+.PHONY: setup init-db dev test dbt-deps dbt-build-local dbt-build-prod docker-build clean
 
 VENV = .venv
 UV = uv
@@ -20,6 +20,12 @@ test:
 
 dbt-deps:
 	cd dbt && $(UV) run dbt deps
+
+dbt-build-local:
+	cd dbt && DBT_TARGET=local $(UV) run dbt build
+
+dbt-build-prod:
+	cd dbt && DBT_TARGET=prod $(UV) run dbt build
 
 docker-build:
 	docker build -t delta-platform:latest .
