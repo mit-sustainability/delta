@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: stg_test_asset
+    description: Sample staging model for connectivity checks.
+    columns:
+      - name: id
+        description: Synthetic identifier.
+      - name: platform_name
+        description: Source platform label.
+      - name: loaded_at
+        description: Record load timestamp.

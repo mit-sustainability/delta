@@ -1,0 +1,577 @@
+[0m12:42:02.991535 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10aac2cf0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c0cf750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c0cfed0>]}
+
+
+============================== 12:42:02.994220 | 255f94c8-cece-473a-b40a-7fac6439351d ==============================
+[0m12:42:02.994220 [info ] [MainThread]: Running with dbt=1.11.7
+[0m12:42:02.994546 [debug] [MainThread]: running dbt with arguments {'log_cache_events': 'False', 'send_anonymous_usage_stats': 'True', 'introspect': 'True', 'no_print': 'None', 'write_json': 'True', 'use_experimental_parser': 'False', 'static_parser': 'True', 'version_check': 'True', 'fail_fast': 'False', 'target_path': 'None', 'warn_error': 'None', 'log_format': 'default', 'empty': 'None', 'profiles_dir': '/Users/yucheng/Documents/Projects/delta/dbt', 'quiet': 'False', 'use_colors': 'True', 'cache_selected_only': 'False', 'log_path': '/Users/yucheng/Documents/Projects/delta/dbt/logs', 'indirect_selection': 'eager', 'printer_width': '80', 'invocation_command': 'dbt debug --target dev', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'debug': 'False', 'partial_parse': 'True'}
+[0m12:42:03.003782 [info ] [MainThread]: dbt version: 1.11.7
+[0m12:42:03.004030 [info ] [MainThread]: python version: 3.13.0
+[0m12:42:03.004184 [info ] [MainThread]: python path: /Users/yucheng/Documents/Projects/delta/.venv/bin/python3
+[0m12:42:03.004325 [info ] [MainThread]: os info: macOS-26.3-arm64-arm-64bit-Mach-O
+[0m12:42:04.941835 [info ] [MainThread]: Using profiles dir at /Users/yucheng/Documents/Projects/delta/dbt
+[0m12:42:04.942170 [info ] [MainThread]: Using profiles.yml file at /Users/yucheng/Documents/Projects/delta/dbt/profiles.yml
+[0m12:42:04.942487 [info ] [MainThread]: Using dbt_project.yml file at /Users/yucheng/Documents/Projects/delta/dbt/dbt_project.yml
+[0m12:42:04.943333 [info ] [MainThread]: adapter type: postgres
+[0m12:42:04.943581 [info ] [MainThread]: adapter version: 1.10.0
+[0m12:42:05.004848 [info ] [MainThread]: Configuration:
+[0m12:42:05.005129 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m12:42:05.005314 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m12:42:05.005464 [info ] [MainThread]: Required dependencies:
+[0m12:42:05.005698 [debug] [MainThread]: Executing "git --help"
+[0m12:42:05.054573 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m12:42:05.055388 [debug] [MainThread]: STDERR: "b''"
+[0m12:42:05.055723 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m12:42:05.055920 [info ] [MainThread]: Connection:
+[0m12:42:05.056090 [info ] [MainThread]:   host: localhost
+[0m12:42:05.056230 [info ] [MainThread]:   port: 5432
+[0m12:42:05.056355 [info ] [MainThread]:   user: yucheng
+[0m12:42:05.056479 [info ] [MainThread]:   database: delta_dev
+[0m12:42:05.056623 [info ] [MainThread]:   schema: raw
+[0m12:42:05.056748 [info ] [MainThread]:   connect_timeout: 10
+[0m12:42:05.056889 [info ] [MainThread]:   role: None
+[0m12:42:05.057005 [info ] [MainThread]:   search_path: None
+[0m12:42:05.057125 [info ] [MainThread]:   keepalives_idle: 0
+[0m12:42:05.057244 [info ] [MainThread]:   sslmode: None
+[0m12:42:05.057361 [info ] [MainThread]:   sslcert: None
+[0m12:42:05.057498 [info ] [MainThread]:   sslkey: None
+[0m12:42:05.057617 [info ] [MainThread]:   sslrootcert: None
+[0m12:42:05.057749 [info ] [MainThread]:   application_name: dbt
+[0m12:42:05.057875 [info ] [MainThread]:   retries: 1
+[0m12:42:05.058388 [info ] [MainThread]: Registered adapter: postgres=1.10.0
+[0m12:42:05.117380 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m12:42:05.169374 [debug] [MainThread]: Using postgres connection "debug"
+[0m12:42:05.169648 [debug] [MainThread]: On debug: select 1 as id
+[0m12:42:05.169817 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m12:42:05.619745 [debug] [MainThread]: Postgres adapter: Got a retryable error when attempting to open a postgres connection.
+1 attempts remaining. Retrying in 0 seconds.
+Error:
+connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "delta_dev" does not exist
+
+[0m12:42:05.639437 [debug] [MainThread]: Postgres adapter: Error running SQL: select 1 as id
+[0m12:42:05.640014 [debug] [MainThread]: Postgres adapter: Rolling back transaction.
+[0m12:42:05.640435 [debug] [MainThread]: On debug: No close available on handle
+[0m12:42:05.640857 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m12:42:05.641287 [info ] [MainThread]: [31m1 check failed:[0m
+[0m12:42:05.641639 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Database Error
+  connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "delta_dev" does not exist
+  
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m12:42:05.642631 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 2.7091906, "process_in_blocks": "0", "process_kernel_time": 0.310976, "process_mem_max_rss": "131858432", "process_out_blocks": "0", "process_user_time": 0.857926}
+[0m12:42:05.643364 [debug] [MainThread]: Command `dbt debug` failed at 12:42:05.643192 after 2.71 seconds
+[0m12:42:05.643870 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m12:42:05.644367 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d1088a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c87ec30>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c8016a0>]}
+[0m12:42:05.644953 [debug] [MainThread]: Flushing usage events
+[0m12:42:05.783292 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m12:56:00.527332 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c5eacf0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10dbff750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10dbffed0>]}
+
+
+============================== 12:56:00.531291 | d5597c01-876c-4663-ab69-7ae37e6dcc54 ==============================
+[0m12:56:00.531291 [info ] [MainThread]: Running with dbt=1.11.7
+[0m12:56:00.531719 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'introspect': 'True', 'warn_error': 'None', 'send_anonymous_usage_stats': 'True', 'fail_fast': 'False', 'quiet': 'False', 'indirect_selection': 'eager', 'partial_parse': 'True', 'write_json': 'True', 'version_check': 'True', 'log_format': 'default', 'use_colors': 'True', 'log_cache_events': 'False', 'profiles_dir': './', 'cache_selected_only': 'False', 'printer_width': '80', 'invocation_command': 'dbt build --target prod', 'target_path': 'None', 'no_print': 'None', 'debug': 'False', 'log_path': '/Users/yucheng/Documents/Projects/delta/dbt/logs', 'empty': 'False', 'use_experimental_parser': 'False'}
+[0m12:56:11.423873 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m12:56:11.424714 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m12:56:11.425019 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m12:56:11.564530 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'd5597c01-876c-4663-ab69-7ae37e6dcc54', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10cf18d60>]}
+[0m12:56:11.601734 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'd5597c01-876c-4663-ab69-7ae37e6dcc54', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b9fe690>]}
+[0m12:56:11.602855 [info ] [MainThread]: Registered adapter: snowflake=1.11.3
+[0m12:56:11.710355 [debug] [MainThread]: checksum: 6b6e0ebcaf85ad01fb66001734c8a9de1fddab0bc26fac0e88d715ed9207abc1, vars: {}, profile: , target: prod, version: 1.11.7
+[0m12:56:11.711038 [info ] [MainThread]: Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m12:56:11.711368 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': 'd5597c01-876c-4663-ab69-7ae37e6dcc54', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111c20850>]}
+[0m12:56:12.261436 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 3 unused configuration paths:
+- models.delta.marts
+- models.delta.intermediate
+- seeds.delta
+[0m12:56:12.263695 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'd5597c01-876c-4663-ab69-7ae37e6dcc54', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111f767b0>]}
+[0m12:56:12.290885 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/yucheng/Documents/Projects/delta/dbt/target/manifest.json
+[0m12:56:12.292580 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/yucheng/Documents/Projects/delta/dbt/target/semantic_manifest.json
+[0m12:56:12.394691 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'd5597c01-876c-4663-ab69-7ae37e6dcc54', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x112377bd0>]}
+[0m12:56:12.395032 [info ] [MainThread]: Found 1 model, 523 macros
+[0m12:56:12.396109 [info ] [MainThread]: 
+[0m12:56:12.396379 [info ] [MainThread]: Concurrency: 8 threads (target='prod')
+[0m12:56:12.396536 [info ] [MainThread]: 
+[0m12:56:12.396784 [debug] [MainThread]: Acquiring new snowflake connection 'master'
+[0m12:56:12.397275 [debug] [ThreadPool]: Acquiring new snowflake connection 'list_delta_prod'
+[0m12:56:12.454629 [debug] [ThreadPool]: Using snowflake connection "list_delta_prod"
+[0m12:56:12.455019 [debug] [ThreadPool]: On list_delta_prod: show terse schemas in database delta_prod
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.11.7", "profile_name": "delta", "target_name": "prod", "connection_name": "list_delta_prod"} */
+[0m12:56:12.455199 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m12:56:13.767427 [debug] [ThreadPool]: Snowflake adapter: Error running SQL: show terse schemas in database delta_prod
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.11.7", "profile_name": "delta", "target_name": "prod", "connection_name": "list_delta_prod"} */
+[0m12:56:13.767688 [debug] [ThreadPool]: Snowflake adapter: Rolling back transaction.
+[0m12:56:13.767888 [debug] [ThreadPool]: Snowflake adapter: Error running SQL: macro list_schemas
+[0m12:56:13.768034 [debug] [ThreadPool]: Snowflake adapter: Rolling back transaction.
+[0m12:56:13.768590 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m12:56:13.768855 [debug] [MainThread]: Connection 'list_delta_prod' was left open.
+[0m12:56:13.769069 [debug] [MainThread]: On list_delta_prod: No close available on handle
+[0m12:56:13.769286 [info ] [MainThread]: 
+[0m12:56:13.769532 [info ] [MainThread]: Finished running  in 0 hours 0 minutes and 1.37 seconds (1.37s).
+[0m12:56:13.769832 [error] [MainThread]: Encountered an error:
+Runtime Error
+  Database error while listing schemas in database "delta_prod"
+  Database Error
+    290404 (08001): 404 Not Found: post MLWHHLL.snowflakecomputing.com:443/session/authenticator-request
+[0m12:56:13.770212 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": false, "command_wall_clock_time": 13.313354, "process_in_blocks": "0", "process_kernel_time": 0.825467, "process_mem_max_rss": "244613120", "process_out_blocks": "0", "process_user_time": 2.999233}
+[0m12:56:13.770484 [debug] [MainThread]: Command `dbt build` failed at 12:56:13.770433 after 13.31 seconds
+[0m12:56:13.770710 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x112011d90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10da3f110>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x112517590>]}
+[0m12:56:13.771062 [debug] [MainThread]: Flushing usage events
+[0m12:56:13.956216 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:00:56.848382 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10cc62cf0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10e277750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10e277ed0>]}
+
+
+============================== 13:00:56.851934 | bba7fa4c-6b29-4048-be55-03341ff8e618 ==============================
+[0m13:00:56.851934 [info ] [MainThread]: Running with dbt=1.11.7
+[0m13:00:56.852361 [debug] [MainThread]: running dbt with arguments {'quiet': 'False', 'printer_width': '80', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'use_experimental_parser': 'False', 'log_path': '/Users/yucheng/Documents/Projects/delta/dbt/logs', 'send_anonymous_usage_stats': 'True', 'use_colors': 'True', 'static_parser': 'True', 'indirect_selection': 'eager', 'target_path': 'None', 'fail_fast': 'False', 'invocation_command': 'dbt build --target prod', 'introspect': 'True', 'debug': 'False', 'no_print': 'None', 'version_check': 'True', 'write_json': 'True', 'log_format': 'default', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'empty': 'False', 'profiles_dir': './', 'warn_error': 'None'}
+[0m13:00:57.497019 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m13:00:57.497336 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m13:00:57.497511 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m13:00:57.533355 [debug] [MainThread]: Snowflake adapter: Replaced underscores (_) with hyphens (-) in Snowflake account name to form a valid account URL.
+[0m13:00:57.618429 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'bba7fa4c-6b29-4048-be55-03341ff8e618', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d590d60>]}
+[0m13:00:57.659560 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'bba7fa4c-6b29-4048-be55-03341ff8e618', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10db0f790>]}
+[0m13:00:57.660278 [info ] [MainThread]: Registered adapter: snowflake=1.11.3
+[0m13:00:57.748568 [debug] [MainThread]: checksum: 6b6e0ebcaf85ad01fb66001734c8a9de1fddab0bc26fac0e88d715ed9207abc1, vars: {}, profile: , target: prod, version: 1.11.7
+[0m13:00:57.782651 [info ] [MainThread]: Unable to do partial parsing because profile has changed
+[0m13:00:57.782947 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': 'bba7fa4c-6b29-4048-be55-03341ff8e618', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111eeb950>]}
+[0m13:00:58.324937 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 3 unused configuration paths:
+- models.delta.marts
+- models.delta.intermediate
+- seeds.delta
+[0m13:00:58.327345 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'bba7fa4c-6b29-4048-be55-03341ff8e618', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11231bb60>]}
+[0m13:00:58.353759 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/yucheng/Documents/Projects/delta/dbt/target/manifest.json
+[0m13:00:58.355558 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/yucheng/Documents/Projects/delta/dbt/target/semantic_manifest.json
+[0m13:00:58.376405 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'bba7fa4c-6b29-4048-be55-03341ff8e618', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x112822270>]}
+[0m13:00:58.376763 [info ] [MainThread]: Found 1 model, 523 macros
+[0m13:00:58.377752 [info ] [MainThread]: 
+[0m13:00:58.377996 [info ] [MainThread]: Concurrency: 8 threads (target='prod')
+[0m13:00:58.378154 [info ] [MainThread]: 
+[0m13:00:58.378406 [debug] [MainThread]: Acquiring new snowflake connection 'master'
+[0m13:00:58.378850 [debug] [ThreadPool]: Acquiring new snowflake connection 'list_delta_prod'
+[0m13:00:58.440180 [debug] [ThreadPool]: Using snowflake connection "list_delta_prod"
+[0m13:00:58.440489 [debug] [ThreadPool]: On list_delta_prod: show terse schemas in database delta_prod
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.11.7", "profile_name": "delta", "target_name": "prod", "connection_name": "list_delta_prod"} */
+[0m13:00:58.440677 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m13:01:01.728139 [debug] [ThreadPool]: Snowflake adapter: Error running SQL: show terse schemas in database delta_prod
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.11.7", "profile_name": "delta", "target_name": "prod", "connection_name": "list_delta_prod"} */
+[0m13:01:01.728603 [debug] [ThreadPool]: Snowflake adapter: Rolling back transaction.
+[0m13:01:01.728950 [debug] [ThreadPool]: Snowflake adapter: Error running SQL: macro list_schemas
+[0m13:01:01.729112 [debug] [ThreadPool]: Snowflake adapter: Rolling back transaction.
+[0m13:01:01.730017 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m13:01:01.730264 [debug] [MainThread]: Connection 'list_delta_prod' was left open.
+[0m13:01:01.730616 [debug] [MainThread]: On list_delta_prod: No close available on handle
+[0m13:01:01.730866 [info ] [MainThread]: 
+[0m13:01:01.731060 [info ] [MainThread]: Finished running  in 0 hours 0 minutes and 3.35 seconds (3.35s).
+[0m13:01:01.731429 [error] [MainThread]: Encountered an error:
+Runtime Error
+  Database error while listing schemas in database "delta_prod"
+  Database Error
+    250001 (08001): Failed to connect to DB: MLWHHLL-MIT-DATALAKE-DEV.snowflakecomputing.com:443. The user you were trying to authenticate as differs from the user currently logged in at the IDP.
+[0m13:01:01.731843 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": false, "command_wall_clock_time": 4.9414496, "process_in_blocks": "0", "process_kernel_time": 0.537136, "process_mem_max_rss": "217595904", "process_out_blocks": "0", "process_user_time": 1.829338}
+[0m13:01:01.732094 [debug] [MainThread]: Command `dbt build` failed at 13:01:01.732046 after 4.94 seconds
+[0m13:01:01.732416 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x112aaf110>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10e0b7110>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x112e8d850>]}
+[0m13:01:01.732713 [debug] [MainThread]: Flushing usage events
+[0m13:01:01.933302 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:03:48.517901 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108beecf0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10a203750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10a203ed0>]}
+
+
+============================== 13:03:48.522106 | 3d1f9390-ec81-442d-aadf-f27e693e2634 ==============================
+[0m13:03:48.522106 [info ] [MainThread]: Running with dbt=1.11.7
+[0m13:03:48.522466 [debug] [MainThread]: running dbt with arguments {'profiles_dir': './', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'debug': 'False', 'log_format': 'default', 'quiet': 'False', 'target_path': 'None', 'static_parser': 'True', 'log_path': '/Users/yucheng/Documents/Projects/delta/dbt/logs', 'write_json': 'True', 'printer_width': '80', 'send_anonymous_usage_stats': 'True', 'fail_fast': 'False', 'indirect_selection': 'eager', 'partial_parse': 'True', 'use_experimental_parser': 'False', 'use_colors': 'True', 'no_print': 'None', 'warn_error': 'None', 'log_cache_events': 'False', 'version_check': 'True', 'introspect': 'True', 'cache_selected_only': 'False', 'empty': 'False', 'invocation_command': 'dbt build --target prod'}
+[0m13:03:49.109885 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m13:03:49.110272 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m13:03:49.110451 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m13:03:49.145237 [debug] [MainThread]: Snowflake adapter: Replaced underscores (_) with hyphens (-) in Snowflake account name to form a valid account URL.
+[0m13:03:49.241255 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '3d1f9390-ec81-442d-aadf-f27e693e2634', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109520d60>]}
+[0m13:03:49.287457 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '3d1f9390-ec81-442d-aadf-f27e693e2634', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109a9b790>]}
+[0m13:03:49.288154 [info ] [MainThread]: Registered adapter: snowflake=1.11.3
+[0m13:03:49.380783 [debug] [MainThread]: checksum: 6b6e0ebcaf85ad01fb66001734c8a9de1fddab0bc26fac0e88d715ed9207abc1, vars: {}, profile: , target: prod, version: 1.11.7
+[0m13:03:49.457932 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m13:03:49.458252 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m13:03:49.458441 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m13:03:49.461075 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 3 unused configuration paths:
+- models.delta.marts
+- models.delta.intermediate
+- seeds.delta
+[0m13:03:49.470611 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '3d1f9390-ec81-442d-aadf-f27e693e2634', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10e078b50>]}
+[0m13:03:49.499557 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/yucheng/Documents/Projects/delta/dbt/target/manifest.json
+[0m13:03:49.501009 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/yucheng/Documents/Projects/delta/dbt/target/semantic_manifest.json
+[0m13:03:49.521869 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '3d1f9390-ec81-442d-aadf-f27e693e2634', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1084d2e40>]}
+[0m13:03:49.522160 [info ] [MainThread]: Found 1 model, 523 macros
+[0m13:03:49.523066 [info ] [MainThread]: 
+[0m13:03:49.523266 [info ] [MainThread]: Concurrency: 8 threads (target='prod')
+[0m13:03:49.523415 [info ] [MainThread]: 
+[0m13:03:49.523666 [debug] [MainThread]: Acquiring new snowflake connection 'master'
+[0m13:03:49.524157 [debug] [ThreadPool]: Acquiring new snowflake connection 'list_delta_prod'
+[0m13:03:49.593343 [debug] [ThreadPool]: Using snowflake connection "list_delta_prod"
+[0m13:03:49.593732 [debug] [ThreadPool]: On list_delta_prod: show terse schemas in database delta_prod
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.11.7", "profile_name": "delta", "target_name": "prod", "connection_name": "list_delta_prod"} */
+[0m13:03:49.593915 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m13:03:52.585760 [debug] [ThreadPool]: Snowflake adapter: Error running SQL: show terse schemas in database delta_prod
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.11.7", "profile_name": "delta", "target_name": "prod", "connection_name": "list_delta_prod"} */
+[0m13:03:52.586662 [debug] [ThreadPool]: Snowflake adapter: Rolling back transaction.
+[0m13:03:52.587363 [debug] [ThreadPool]: Snowflake adapter: Error running SQL: macro list_schemas
+[0m13:03:52.587711 [debug] [ThreadPool]: Snowflake adapter: Rolling back transaction.
+[0m13:03:52.589125 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m13:03:52.589478 [debug] [MainThread]: Connection 'list_delta_prod' was left open.
+[0m13:03:52.589670 [debug] [MainThread]: On list_delta_prod: No close available on handle
+[0m13:03:52.590007 [info ] [MainThread]: 
+[0m13:03:52.590405 [info ] [MainThread]: Finished running  in 0 hours 0 minutes and 3.07 seconds (3.07s).
+[0m13:03:52.590927 [error] [MainThread]: Encountered an error:
+Runtime Error
+  Database error while listing schemas in database "delta_prod"
+  Database Error
+    250001 (08001): Failed to connect to DB: MLWHHLL-MIT-DATALAKE-DEV.snowflakecomputing.com:443. The user you were trying to authenticate as differs from the user currently logged in at the IDP.
+[0m13:03:52.591589 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": false, "command_wall_clock_time": 4.144335, "process_in_blocks": "0", "process_kernel_time": 0.498545, "process_mem_max_rss": "208027648", "process_out_blocks": "0", "process_user_time": 1.358844}
+[0m13:03:52.592015 [debug] [MainThread]: Command `dbt build` failed at 13:03:52.591937 after 4.14 seconds
+[0m13:03:52.592434 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10a1dfe70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10e473850>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10e771e60>]}
+[0m13:03:52.592928 [debug] [MainThread]: Flushing usage events
+[0m13:03:52.752750 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:05:54.427519 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10849ecf0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109aaf750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109aafed0>]}
+
+
+============================== 13:05:54.431043 | 54b89a7b-3abd-4225-b2e0-c6225faec7e6 ==============================
+[0m13:05:54.431043 [info ] [MainThread]: Running with dbt=1.11.7
+[0m13:05:54.431402 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'quiet': 'False', 'cache_selected_only': 'False', 'version_check': 'True', 'write_json': 'True', 'introspect': 'True', 'static_parser': 'True', 'target_path': 'None', 'warn_error': 'None', 'log_format': 'default', 'fail_fast': 'False', 'profiles_dir': './', 'use_experimental_parser': 'False', 'log_path': '/Users/yucheng/Documents/Projects/delta/dbt/logs', 'debug': 'False', 'log_cache_events': 'False', 'send_anonymous_usage_stats': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'indirect_selection': 'eager', 'invocation_command': 'dbt build --target prod', 'no_print': 'None', 'empty': 'False', 'partial_parse': 'True', 'use_colors': 'True'}
+[0m13:05:54.472553 [error] [MainThread]: Encountered an error:
+
+[0m13:05:54.476089 [error] [MainThread]: Traceback (most recent call last):
+  File "/Users/yucheng/Documents/Projects/delta/.venv/lib/python3.13/site-packages/dbt/cli/requires.py", line 182, in wrapper
+    result, success = func(*args, **kwargs)
+                      ~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/yucheng/Documents/Projects/delta/.venv/lib/python3.13/site-packages/dbt/cli/requires.py", line 128, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/yucheng/Documents/Projects/delta/.venv/lib/python3.13/site-packages/dbt/cli/requires.py", line 272, in wrapper
+    profile = load_profile(flags.PROJECT_DIR, flags.VARS, flags.PROFILE, flags.TARGET, threads)
+  File "/Users/yucheng/Documents/Projects/delta/.venv/lib/python3.13/site-packages/dbt/config/runtime.py", line 79, in load_profile
+    profile = Profile.render(
+        profile_renderer, profile_name, profile_name_override, target_override, threads_override
+    )
+  File "/Users/yucheng/Documents/Projects/delta/.venv/lib/python3.13/site-packages/dbt/config/profile.py", line 404, in render
+    return cls.from_raw_profiles(
+           ~~~~~~~~~~~~~~~~~~~~~^
+        raw_profiles=raw_profiles,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        threads_override=threads_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/yucheng/Documents/Projects/delta/.venv/lib/python3.13/site-packages/dbt/config/profile.py", line 370, in from_raw_profiles
+    return cls.from_raw_profile_info(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        raw_profile=raw_profile,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        threads_override=threads_override,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/yucheng/Documents/Projects/delta/.venv/lib/python3.13/site-packages/dbt/config/profile.py", line 326, in from_raw_profile_info
+    credentials: Credentials = cls._credentials_from_profile(
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        profile_data, profile_name, target_name
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/yucheng/Documents/Projects/delta/.venv/lib/python3.13/site-packages/dbt/config/profile.py", line 150, in _credentials_from_profile
+    cls = load_plugin(typename)
+  File "/Users/yucheng/Documents/Projects/delta/.venv/lib/python3.13/site-packages/dbt/adapters/factory.py", line 239, in load_plugin
+    return FACTORY.load_plugin(name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/yucheng/Documents/Projects/delta/.venv/lib/python3.13/site-packages/dbt/adapters/factory.py", line 68, in load_plugin
+    mod: Any = import_module("." + name, "dbt.adapters")
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yucheng/.local/share/uv/python/cpython-3.13.0-macos-aarch64-none/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1022, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/yucheng/Documents/Projects/delta/.venv/lib/python3.13/site-packages/dbt/adapters/snowflake/__init__.py", line 3, in <module>
+    from dbt.adapters.snowflake.connections import SnowflakeConnectionManager
+  File "/Users/yucheng/Documents/Projects/delta/.venv/lib/python3.13/site-packages/dbt/adapters/snowflake/connections.py", line 25, in <module>
+    import snowflake.connector
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1018, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1114, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1214, in get_data
+KeyboardInterrupt
+
+[0m13:05:54.476760 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": false, "command_wall_clock_time": 0.10842058, "process_in_blocks": "0", "process_kernel_time": 0.211872, "process_mem_max_rss": "118308864", "process_out_blocks": "0", "process_user_time": 0.715223}
+[0m13:05:54.477289 [debug] [MainThread]: Command `dbt build` failed at 13:05:54.477193 after 0.11 seconds
+[0m13:05:54.477544 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109ae7bb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109b75c70>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109afb240>]}
+[0m13:05:54.477769 [debug] [MainThread]: Flushing usage events
+[0m13:05:54.719209 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:06:09.781475 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10be5acf0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d473750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d473ed0>]}
+
+
+============================== 13:06:09.785162 | 84c7a873-7c54-4aab-9f1a-8d5e8796575d ==============================
+[0m13:06:09.785162 [info ] [MainThread]: Running with dbt=1.11.7
+[0m13:06:09.785619 [debug] [MainThread]: running dbt with arguments {'invocation_command': 'dbt build --target prod', 'profiles_dir': './', 'fail_fast': 'False', 'log_format': 'default', 'log_cache_events': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'use_colors': 'True', 'static_parser': 'True', 'quiet': 'False', 'cache_selected_only': 'False', 'use_experimental_parser': 'False', 'printer_width': '80', 'warn_error': 'None', 'target_path': 'None', 'partial_parse': 'True', 'introspect': 'True', 'indirect_selection': 'eager', 'log_path': '/Users/yucheng/Documents/Projects/delta/dbt/logs', 'write_json': 'True', 'version_check': 'True', 'send_anonymous_usage_stats': 'True', 'empty': 'False', 'debug': 'False'}
+[0m13:06:10.313010 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m13:06:10.313334 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m13:06:10.313519 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m13:06:10.349427 [debug] [MainThread]: Snowflake adapter: Replaced underscores (_) with hyphens (-) in Snowflake account name to form a valid account URL.
+[0m13:06:10.442614 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '84c7a873-7c54-4aab-9f1a-8d5e8796575d', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10c788d60>]}
+[0m13:06:10.488953 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '84c7a873-7c54-4aab-9f1a-8d5e8796575d', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10cd07790>]}
+[0m13:06:10.489848 [info ] [MainThread]: Registered adapter: snowflake=1.11.3
+[0m13:06:10.580674 [debug] [MainThread]: checksum: 6b6e0ebcaf85ad01fb66001734c8a9de1fddab0bc26fac0e88d715ed9207abc1, vars: {}, profile: , target: prod, version: 1.11.7
+[0m13:06:10.614491 [info ] [MainThread]: Unable to do partial parsing because profile has changed
+[0m13:06:10.614888 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '84c7a873-7c54-4aab-9f1a-8d5e8796575d', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1110e3950>]}
+[0m13:06:11.150431 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 3 unused configuration paths:
+- models.delta.intermediate
+- models.delta.marts
+- seeds.delta
+[0m13:06:11.152737 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '84c7a873-7c54-4aab-9f1a-8d5e8796575d', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11151bb60>]}
+[0m13:06:11.180033 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/yucheng/Documents/Projects/delta/dbt/target/manifest.json
+[0m13:06:11.181658 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/yucheng/Documents/Projects/delta/dbt/target/semantic_manifest.json
+[0m13:06:11.203607 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '84c7a873-7c54-4aab-9f1a-8d5e8796575d', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111a2a270>]}
+[0m13:06:11.204045 [info ] [MainThread]: Found 1 model, 523 macros
+[0m13:06:11.205204 [info ] [MainThread]: 
+[0m13:06:11.205405 [info ] [MainThread]: Concurrency: 8 threads (target='prod')
+[0m13:06:11.205556 [info ] [MainThread]: 
+[0m13:06:11.205815 [debug] [MainThread]: Acquiring new snowflake connection 'master'
+[0m13:06:11.206273 [debug] [ThreadPool]: Acquiring new snowflake connection 'list_delta_prod'
+[0m13:06:11.265015 [debug] [ThreadPool]: Using snowflake connection "list_delta_prod"
+[0m13:06:11.265239 [debug] [ThreadPool]: On list_delta_prod: show terse schemas in database delta_prod
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.11.7", "profile_name": "delta", "target_name": "prod", "connection_name": "list_delta_prod"} */
+[0m13:06:11.265398 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m13:06:14.112685 [debug] [ThreadPool]: Snowflake adapter: Error running SQL: show terse schemas in database delta_prod
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.11.7", "profile_name": "delta", "target_name": "prod", "connection_name": "list_delta_prod"} */
+[0m13:06:14.113486 [debug] [ThreadPool]: Snowflake adapter: Rolling back transaction.
+[0m13:06:14.114121 [debug] [ThreadPool]: Snowflake adapter: Error running SQL: macro list_schemas
+[0m13:06:14.114525 [debug] [ThreadPool]: Snowflake adapter: Rolling back transaction.
+[0m13:06:14.116036 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m13:06:14.116383 [debug] [MainThread]: Connection 'list_delta_prod' was left open.
+[0m13:06:14.116752 [debug] [MainThread]: On list_delta_prod: No close available on handle
+[0m13:06:14.117932 [info ] [MainThread]: 
+[0m13:06:14.118823 [info ] [MainThread]: Finished running  in 0 hours 0 minutes and 2.91 seconds (2.91s).
+[0m13:06:14.119775 [error] [MainThread]: Encountered an error:
+Runtime Error
+  Database error while listing schemas in database "delta_prod"
+  Database Error
+    250001 (08001): Failed to connect to DB: MLWHHLL-MIT-DATALAKE-DEV.snowflakecomputing.com:443. The user you were trying to authenticate as differs from the user currently logged in at the IDP.
+[0m13:06:14.120876 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": false, "command_wall_clock_time": 4.417135, "process_in_blocks": "0", "process_kernel_time": 0.499704, "process_mem_max_rss": "215498752", "process_out_blocks": "0", "process_user_time": 1.813737}
+[0m13:06:14.121244 [debug] [MainThread]: Command `dbt build` failed at 13:06:14.121185 after 4.42 seconds
+[0m13:06:14.121536 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111cab380>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d2b3110>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111a63710>]}
+[0m13:06:14.121782 [debug] [MainThread]: Flushing usage events
+[0m13:06:14.251066 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:07:50.699352 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10887ecf0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109e93750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109e93ed0>]}
+
+
+============================== 13:07:50.702945 | ead56157-6502-448d-8cd0-21c7322178a9 ==============================
+[0m13:07:50.702945 [info ] [MainThread]: Running with dbt=1.11.7
+[0m13:07:50.703318 [debug] [MainThread]: running dbt with arguments {'empty': 'False', 'send_anonymous_usage_stats': 'True', 'printer_width': '80', 'write_json': 'True', 'profiles_dir': './', 'debug': 'False', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'indirect_selection': 'eager', 'fail_fast': 'False', 'use_experimental_parser': 'False', 'use_colors': 'True', 'partial_parse': 'True', 'invocation_command': 'dbt build --target prod', 'static_parser': 'True', 'introspect': 'True', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'warn_error': 'None', 'log_path': '/Users/yucheng/Documents/Projects/delta/dbt/logs', 'cache_selected_only': 'False', 'log_cache_events': 'False'}
+[0m13:07:51.291458 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m13:07:51.291787 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m13:07:51.291973 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m13:07:51.324728 [debug] [MainThread]: Snowflake adapter: Replaced underscores (_) with hyphens (-) in Snowflake account name to form a valid account URL.
+[0m13:07:51.416883 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'ead56157-6502-448d-8cd0-21c7322178a9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1091b0d60>]}
+[0m13:07:51.462380 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'ead56157-6502-448d-8cd0-21c7322178a9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10972b790>]}
+[0m13:07:51.463119 [info ] [MainThread]: Registered adapter: snowflake=1.11.3
+[0m13:07:51.554025 [debug] [MainThread]: checksum: 6b6e0ebcaf85ad01fb66001734c8a9de1fddab0bc26fac0e88d715ed9207abc1, vars: {}, profile: , target: prod, version: 1.11.7
+[0m13:07:51.587467 [info ] [MainThread]: Unable to do partial parsing because profile has changed
+[0m13:07:51.587744 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': 'ead56157-6502-448d-8cd0-21c7322178a9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10db07950>]}
+[0m13:07:52.185041 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 3 unused configuration paths:
+- models.delta.marts
+- models.delta.intermediate
+- seeds.delta
+[0m13:07:52.187376 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'ead56157-6502-448d-8cd0-21c7322178a9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10df3fb60>]}
+[0m13:07:52.214677 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/yucheng/Documents/Projects/delta/dbt/target/manifest.json
+[0m13:07:52.216233 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/yucheng/Documents/Projects/delta/dbt/target/semantic_manifest.json
+[0m13:07:52.235982 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'ead56157-6502-448d-8cd0-21c7322178a9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10e44a270>]}
+[0m13:07:52.236288 [info ] [MainThread]: Found 1 model, 523 macros
+[0m13:07:52.237201 [info ] [MainThread]: 
+[0m13:07:52.237417 [info ] [MainThread]: Concurrency: 8 threads (target='prod')
+[0m13:07:52.237568 [info ] [MainThread]: 
+[0m13:07:52.237847 [debug] [MainThread]: Acquiring new snowflake connection 'master'
+[0m13:07:52.238250 [debug] [ThreadPool]: Acquiring new snowflake connection 'list_delta_prod'
+[0m13:07:52.291196 [debug] [ThreadPool]: Using snowflake connection "list_delta_prod"
+[0m13:07:52.291608 [debug] [ThreadPool]: On list_delta_prod: show terse schemas in database delta_prod
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.11.7", "profile_name": "delta", "target_name": "prod", "connection_name": "list_delta_prod"} */
+[0m13:07:52.291870 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m13:07:55.663953 [debug] [ThreadPool]: Snowflake adapter: Snowflake query id: 01c2f5e3-0000-f09d-0019-b20b02039f2e
+[0m13:07:55.664871 [debug] [ThreadPool]: Snowflake adapter: Snowflake error: 002043 (02000): SQL compilation error:
+Object does not exist, or operation cannot be performed.
+[0m13:07:55.665554 [debug] [ThreadPool]: Snowflake adapter: Error running SQL: macro list_schemas
+[0m13:07:55.665957 [debug] [ThreadPool]: Snowflake adapter: Rolling back transaction.
+[0m13:07:55.667386 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m13:07:55.667651 [debug] [MainThread]: Connection 'list_delta_prod' was left open.
+[0m13:07:55.667824 [debug] [MainThread]: On list_delta_prod: Close
+[0m13:07:55.856439 [info ] [MainThread]: 
+[0m13:07:55.857234 [info ] [MainThread]: Finished running  in 0 hours 0 minutes and 3.62 seconds (3.62s).
+[0m13:07:55.858345 [error] [MainThread]: Encountered an error:
+Runtime Error
+  Database error while listing schemas in database "delta_prod"
+  Database Error
+    002043 (02000): SQL compilation error:
+    Object does not exist, or operation cannot be performed.
+[0m13:07:55.859389 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": false, "command_wall_clock_time": 5.2223077, "process_in_blocks": "0", "process_kernel_time": 0.510765, "process_mem_max_rss": "213237760", "process_out_blocks": "0", "process_user_time": 1.824483}
+[0m13:07:55.860659 [debug] [MainThread]: Command `dbt build` failed at 13:07:55.860466 after 5.22 seconds
+[0m13:07:55.861509 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10e6cf5f0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109cd3110>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10e487650>]}
+[0m13:07:55.861908 [debug] [MainThread]: Flushing usage events
+[0m13:07:56.019807 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:35:52.767338 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10a34ecf0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b95f750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b95fed0>]}
+
+
+============================== 13:35:52.771708 | 8f458597-24dd-44d2-a43c-d6326548b04d ==============================
+[0m13:35:52.771708 [info ] [MainThread]: Running with dbt=1.11.7
+[0m13:35:52.772240 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'log_cache_events': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error': 'None', 'printer_width': '80', 'use_experimental_parser': 'False', 'send_anonymous_usage_stats': 'True', 'indirect_selection': 'eager', 'version_check': 'True', 'debug': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'fail_fast': 'False', 'use_colors': 'True', 'introspect': 'True', 'log_format': 'default', 'empty': 'None', 'target_path': 'None', 'profiles_dir': './', 'write_json': 'True', 'cache_selected_only': 'False', 'partial_parse': 'True', 'log_path': '/Users/yucheng/Documents/Projects/delta/dbt/logs', 'invocation_command': 'dbt debug --target prod'}
+[0m13:35:52.789941 [info ] [MainThread]: dbt version: 1.11.7
+[0m13:35:52.790205 [info ] [MainThread]: python version: 3.13.0
+[0m13:35:52.790911 [info ] [MainThread]: python path: /Users/yucheng/Documents/Projects/delta/.venv/bin/python3
+[0m13:35:52.791249 [info ] [MainThread]: os info: macOS-26.3-arm64-arm-64bit-Mach-O
+[0m13:35:53.780786 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m13:35:53.781158 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m13:35:53.781354 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m13:35:53.886679 [debug] [MainThread]: Snowflake adapter: Replaced underscores (_) with hyphens (-) in Snowflake account name to form a valid account URL.
+[0m13:35:53.890274 [info ] [MainThread]: Using profiles dir at ./
+[0m13:35:53.890525 [info ] [MainThread]: Using profiles.yml file at ./profiles.yml
+[0m13:35:53.890695 [info ] [MainThread]: Using dbt_project.yml file at /Users/yucheng/Documents/Projects/delta/dbt/dbt_project.yml
+[0m13:35:53.891331 [info ] [MainThread]: adapter type: snowflake
+[0m13:35:53.891657 [info ] [MainThread]: adapter version: 1.11.3
+[0m13:35:53.964731 [info ] [MainThread]: Configuration:
+[0m13:35:53.965098 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m13:35:53.965400 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m13:35:53.965628 [info ] [MainThread]: Required dependencies:
+[0m13:35:53.966018 [debug] [MainThread]: Executing "git --help"
+[0m13:35:54.019972 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m13:35:54.020695 [debug] [MainThread]: STDERR: "b''"
+[0m13:35:54.020939 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m13:35:54.021137 [info ] [MainThread]: Connection:
+[0m13:35:54.021321 [info ] [MainThread]:   account: MLWHHLL-MIT-DATALAKE-DEV
+[0m13:35:54.021463 [info ] [MainThread]:   user: YU_CHENG@MIT.EDU
+[0m13:35:54.021647 [info ] [MainThread]:   database: delta_prod
+[0m13:35:54.021829 [info ] [MainThread]:   warehouse: BA_WAREHOUSE
+[0m13:35:54.021978 [info ] [MainThread]:   role: public
+[0m13:35:54.022255 [info ] [MainThread]:   schema: raw
+[0m13:35:54.022402 [info ] [MainThread]:   authenticator: externalbrowser
+[0m13:35:54.022535 [info ] [MainThread]:   oauth_client_id: None
+[0m13:35:54.022818 [info ] [MainThread]:   query_tag: None
+[0m13:35:54.023009 [info ] [MainThread]:   client_session_keep_alive: False
+[0m13:35:54.023140 [info ] [MainThread]:   host: None
+[0m13:35:54.023284 [info ] [MainThread]:   port: None
+[0m13:35:54.023423 [info ] [MainThread]:   proxy_host: None
+[0m13:35:54.023555 [info ] [MainThread]:   proxy_port: None
+[0m13:35:54.023680 [info ] [MainThread]:   protocol: None
+[0m13:35:54.023810 [info ] [MainThread]:   connect_retries: 1
+[0m13:35:54.023937 [info ] [MainThread]:   connect_timeout: None
+[0m13:35:54.024066 [info ] [MainThread]:   retry_on_database_errors: False
+[0m13:35:54.024195 [info ] [MainThread]:   retry_all: False
+[0m13:35:54.024319 [info ] [MainThread]:   insecure_mode: False
+[0m13:35:54.024445 [info ] [MainThread]:   reuse_connections: True
+[0m13:35:54.024571 [info ] [MainThread]:   s3_stage_vpce_dns_name: None
+[0m13:35:54.024734 [info ] [MainThread]:   platform_detection_timeout_seconds: 0.0
+[0m13:35:54.025156 [info ] [MainThread]: Registered adapter: snowflake=1.11.3
+[0m13:35:54.123704 [debug] [MainThread]: Acquiring new snowflake connection 'debug'
+[0m13:35:54.187839 [debug] [MainThread]: Using snowflake connection "debug"
+[0m13:35:54.188119 [debug] [MainThread]: On debug: select 1 as id
+[0m13:35:54.188297 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m13:35:54.800838 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.612 seconds
+[0m13:35:54.801511 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m13:35:54.801747 [info ] [MainThread]: [32mAll checks passed![0m
+[0m13:35:54.802091 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": true, "command_wall_clock_time": 2.0994697, "process_in_blocks": "0", "process_kernel_time": 0.544098, "process_mem_max_rss": "201850880", "process_out_blocks": "0", "process_user_time": 1.313585}
+[0m13:35:54.802501 [debug] [MainThread]: Command `dbt debug` succeeded at 13:35:54.802298 after 2.10 seconds
+[0m13:35:54.803019 [debug] [MainThread]: Connection 'debug' was left open.
+[0m13:35:54.803182 [debug] [MainThread]: On debug: Close
+[0m13:35:54.978800 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10fd503e0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10f8d9490>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10fd3e140>]}
+[0m13:35:54.979820 [debug] [MainThread]: Flushing usage events
+[0m13:35:55.154654 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:36:01.165734 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10beaacf0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d4bf750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d4bfed0>]}
+
+
+============================== 13:36:01.169122 | e25c7cf9-7f00-4fad-b363-8dc1788adc46 ==============================
+[0m13:36:01.169122 [info ] [MainThread]: Running with dbt=1.11.7
+[0m13:36:01.169493 [debug] [MainThread]: running dbt with arguments {'log_format': 'default', 'no_print': 'None', 'printer_width': '80', 'write_json': 'True', 'version_check': 'True', 'debug': 'False', 'indirect_selection': 'eager', 'warn_error': 'None', 'static_parser': 'True', 'log_path': '/Users/yucheng/Documents/Projects/delta/dbt/logs', 'profiles_dir': './', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'partial_parse': 'True', 'quiet': 'False', 'introspect': 'True', 'log_cache_events': 'False', 'use_experimental_parser': 'False', 'send_anonymous_usage_stats': 'True', 'invocation_command': 'dbt build --target prod', 'target_path': 'None', 'use_colors': 'True', 'fail_fast': 'False', 'empty': 'False', 'cache_selected_only': 'False'}
+[0m13:36:01.711648 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m13:36:01.712094 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m13:36:01.712336 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m13:36:01.744659 [debug] [MainThread]: Snowflake adapter: Replaced underscores (_) with hyphens (-) in Snowflake account name to form a valid account URL.
+[0m13:36:01.750238 [warn ] [MainThread]: [[33mWARNING[0m][MissingPlusPrefixDeprecation]: Deprecated functionality
+Missing '+' prefix on `materialized` found at `delta.materialized` in file
+`/Users/yucheng/Documents/Projects/delta/dbt/dbt_project.yml`. Hierarchical
+config values without a '+' prefix are deprecated in dbt_project.yml.
+[0m13:36:01.750546 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': 'e25c7cf9-7f00-4fad-b363-8dc1788adc46', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11121f490>]}
+[0m13:36:01.751044 [warn ] [MainThread]: [[33mWARNING[0m][CustomTopLevelKeyDeprecation]: Deprecated functionality
+Unexpected top-level key packages in file
+`/Users/yucheng/Documents/Projects/delta/dbt/dbt_project.yml`
+[0m13:36:01.751293 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': 'e25c7cf9-7f00-4fad-b363-8dc1788adc46', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1111e7350>]}
+[0m13:36:01.847309 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'e25c7cf9-7f00-4fad-b363-8dc1788adc46', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111133350>]}
+[0m13:36:01.887562 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'e25c7cf9-7f00-4fad-b363-8dc1788adc46', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10d241c70>]}
+[0m13:36:01.888387 [info ] [MainThread]: Registered adapter: snowflake=1.11.3
+[0m13:36:01.978760 [debug] [MainThread]: checksum: 6b6e0ebcaf85ad01fb66001734c8a9de1fddab0bc26fac0e88d715ed9207abc1, vars: {}, profile: , target: prod, version: 1.11.7
+[0m13:36:02.011905 [info ] [MainThread]: Unable to do partial parsing because a project config has changed
+[0m13:36:02.012233 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': 'e25c7cf9-7f00-4fad-b363-8dc1788adc46', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1115fa190>]}
+[0m13:36:02.642870 [warn ] [MainThread]: [[33mWARNING[0m]: Did not find matching node for patch with name '_raw_placeholder' in the 'models' section of file 'models/schema.yml'
+[0m13:36:02.689158 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'e25c7cf9-7f00-4fad-b363-8dc1788adc46', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111619f30>]}
+[0m13:36:02.725522 [debug] [MainThread]: Wrote artifact WritableManifest to /Users/yucheng/Documents/Projects/delta/dbt/target/manifest.json
+[0m13:36:02.727558 [debug] [MainThread]: Wrote artifact SemanticManifest to /Users/yucheng/Documents/Projects/delta/dbt/target/semantic_manifest.json
+[0m13:36:02.752749 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'e25c7cf9-7f00-4fad-b363-8dc1788adc46', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111953290>]}
+[0m13:36:02.753118 [info ] [MainThread]: Found 1 model, 523 macros
+[0m13:36:02.754161 [info ] [MainThread]: 
+[0m13:36:02.754376 [info ] [MainThread]: Concurrency: 8 threads (target='prod')
+[0m13:36:02.754523 [info ] [MainThread]: 
+[0m13:36:02.754786 [debug] [MainThread]: Acquiring new snowflake connection 'master'
+[0m13:36:02.755301 [debug] [ThreadPool]: Acquiring new snowflake connection 'list_delta_prod'
+[0m13:36:02.805060 [debug] [ThreadPool]: Using snowflake connection "list_delta_prod"
+[0m13:36:02.805342 [debug] [ThreadPool]: On list_delta_prod: show terse schemas in database delta_prod
+    limit 10000
+/* {"app": "dbt", "dbt_version": "1.11.7", "profile_name": "delta", "target_name": "prod", "connection_name": "list_delta_prod"} */
+[0m13:36:02.805511 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m13:36:03.416982 [debug] [ThreadPool]: Snowflake adapter: Snowflake query id: 01c2f600-0000-f1e9-0019-b20b0203be2a
+[0m13:36:03.421895 [debug] [ThreadPool]: Snowflake adapter: Snowflake error: 002043 (02000): SQL compilation error:
+Object does not exist, or operation cannot be performed.
+[0m13:36:03.432670 [debug] [ThreadPool]: Snowflake adapter: Error running SQL: macro list_schemas
+[0m13:36:03.436579 [debug] [ThreadPool]: Snowflake adapter: Rolling back transaction.
+[0m13:36:03.438398 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m13:36:03.439731 [debug] [MainThread]: Connection 'list_delta_prod' was left open.
+[0m13:36:03.441623 [debug] [MainThread]: On list_delta_prod: Close
+[0m13:36:03.628926 [info ] [MainThread]: 
+[0m13:36:03.629815 [info ] [MainThread]: Finished running  in 0 hours 0 minutes and 0.87 seconds (0.87s).
+[0m13:36:03.630605 [error] [MainThread]: Encountered an error:
+Runtime Error
+  Database error while listing schemas in database "delta_prod"
+  Database Error
+    002043 (02000): SQL compilation error:
+    Object does not exist, or operation cannot be performed.
+[0m13:36:03.631406 [warn ] [MainThread]: [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingPlusPrefixDeprecation: 2 occurrences
+- CustomTopLevelKeyDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+[0m13:36:03.632297 [debug] [MainThread]: Resource report: {"command_name": "build", "command_success": false, "command_wall_clock_time": 2.5305455, "process_in_blocks": "0", "process_kernel_time": 0.490828, "process_mem_max_rss": "198475776", "process_out_blocks": "0", "process_user_time": 2.014484}
+[0m13:36:03.632896 [debug] [MainThread]: Command `dbt build` failed at 13:36:03.632793 after 2.53 seconds
+[0m13:36:03.633361 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111b53960>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111bc2c10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11712c550>]}
+[0m13:36:03.633852 [debug] [MainThread]: Flushing usage events
+[0m13:36:03.785894 [debug] [MainThread]: An error was encountered while trying to flush usage events

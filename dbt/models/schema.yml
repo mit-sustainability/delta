@@ -1,0 +1,5 @@
+version: 2
+
+models:
+  - name: _raw_placeholder
+    description: Placeholder model for raw layer structure.

@@ -1,0 +1,5 @@
+version: 2
+
+models:
+  - name: _final_placeholder
+    description: Placeholder model for final layer structure.

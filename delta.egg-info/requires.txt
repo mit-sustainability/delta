@@ -1,0 +1,13 @@
+dagster
+dagster-webserver
+dagster-cloud
+dagster-dbt
+dbt-core>=1.4.0
+dbt-snowflake
+dbt-postgres
+pandas
+
+[dev]
+pytest
+pre-commit
+sqlfluff-templater-dbt

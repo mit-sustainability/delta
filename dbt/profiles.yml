@@ -1,0 +1,23 @@
+delta:
+  target: "{{ env_var('DBT_TARGET', 'dev') }}"
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('POSTGRES_HOST', 'localhost') }}"
+      user: "{{ env_var('POSTGRES_USER', 'postgres') }}"
+      password: "{{ env_var('POSTGRES_PASSWORD', 'postgres') }}"
+      port: "{{ env_var('POSTGRES_PORT', 5432) | int }}"
+      dbname: "{{ env_var('POSTGRES_DB', 'delta_dev') }}"
+      schema: "{{ env_var('DBT_SCHEMA_TRANSFORM', 'rpt_mitos') }}"
+      threads: 4
+
+    prod:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      role: "{{ env_var('SNOWFLAKE_ROLE') }}"
+      database: "{{ env_var('SNOWFLAKE_DATABASE') }}"
+      warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
+      schema: "{{ env_var('DBT_SCHEMA_TRANSFORM', 'rpt_mitos') }}"
+      authenticator: externalbrowser
+      threads: 8

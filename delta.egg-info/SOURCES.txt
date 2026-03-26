@@ -1,0 +1,12 @@
+README.md
+pyproject.toml
+cockpit/__init__.py
+cockpit/assets.py
+cockpit/definitions.py
+cockpit/project.py
+cockpit/tests/test_defs.py
+delta.egg-info/PKG-INFO
+delta.egg-info/SOURCES.txt
+delta.egg-info/dependency_links.txt
+delta.egg-info/requires.txt
+delta.egg-info/top_level.txt
