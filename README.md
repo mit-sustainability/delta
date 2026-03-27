@@ -76,3 +76,32 @@ For convenience, you can also use:
 make dbt-build-local
 make dbt-build-prod
 ```
+
+## Local Raw Source Fixtures
+
+If a dbt model depends on a raw table that normally lands in Snowflake, keep the dbt model pointed
+at a logical `source()` and mirror that source into local Postgres for `DBT_TARGET=local`.
+
+1. Declare the raw table as a dbt source in `dbt/models/schema.yml`.
+2. Load a representative CSV fixture into local Postgres:
+
+```bash
+make load-local-raw RAW_CSV_PATH=./path/to/uploaded_table.csv RAW_TABLE=uploaded_table_example
+```
+
+The loader creates the table in `DBT_SCHEMA_RAW`, loads all columns as `TEXT`, and replaces its
+contents on each run. Downstream staging models should cast types explicitly, which keeps the local
+fixture flow simple and stable.
+
+## Dagster Warehouse Resource Pattern
+
+For Dagster raw-processing assets, use the shared `warehouse` resource in
+`cockpit/definitions.py`. It switches between:
+
+- `local`: PostgreSQL, for local or test runs
+- `prod`: Snowflake, for target-state production runs
+
+Selection is driven by `WAREHOUSE_TARGET`, falling back to `DBT_TARGET`.
+
+This is the right pattern when the same asset logic needs to write raw tables in both environments
+without hardcoding a backend-specific client at the asset call site.

@@ -23,6 +23,7 @@ class _PrefixTranslator(DagsterDbtTranslator):
 def postgres_dbt_assets(context: AssetExecutionContext, dbt_postgres: DbtCliResource):
     yield from dbt_postgres.cli(["build", "--target", "local"], context=context).stream()
 
+
 # Snowflake-backed dbt assets for target-state production runs.
 @dbt_assets(
     manifest=delta_dbt_project.manifest_path,
