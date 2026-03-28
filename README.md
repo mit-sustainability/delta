@@ -140,3 +140,20 @@ cd dbt && DBT_TARGET=prod uv run dbt build --select stg_test_asset fct_test_asse
 Snowflake production runs assume `DBT_SCHEMA_RAW` and `DBT_SCHEMA_TRANSFORM` already exist and are
 granted to the service role. The smoke asset may replace the test table inside that schema, but it
 does not attempt to create the schema in Snowflake.
+
+## Automated Verification Coverage
+
+Recent smoke-path changes have automated unit coverage in `cockpit/tests/`:
+
+- `test_resources.py` validates `WarehouseResource` configuration selection for local Postgres and
+  prod Snowflake auth modes (private key, password, and browser auth).
+- `test_assets.py` validates that `warehouse_test_input` emits backend-specific SQL for Postgres and
+  Snowflake and records the expected metadata.
+- `test_defs.py` validates Definitions wiring and target-driven dbt resource selection
+  (`dbt_postgres` for local, `dbt_snowflake` for prod).
+
+Run the suite with:
+
+```bash
+uv run pytest -q
+```
