@@ -22,7 +22,7 @@ packages:
 
 models:
   delta:
-    +snowflake_warehouse: "COMPUTE_WH" # Default warehouse
+    +snowflake_warehouse: "BA_WAREHOUSE"
     +persist_docs:
       relation: true
       columns: true
@@ -34,7 +34,7 @@ models:
       +schema: "{{ env_var('DBT_SCHEMA_RAW', 'src_byod_mitos') }}"
       +tags:
         - raw
-      materialized: view
+      materialized: table
     staging:
       +meta:
         dagster:

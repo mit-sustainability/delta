@@ -68,6 +68,15 @@ export SNOWFLAKE_PASSWORD=...
 export SNOWFLAKE_AUTHENTICATOR=snowflake
 ```
 
+For deployed EC2 Dagster or other unattended runs, prefer Snowflake key-pair auth instead of
+`externalbrowser`:
+
+```bash
+export SNOWFLAKE_PRIVATE_KEY_PATH=/run/secrets/snowflake_service_user.p8
+export SNOWFLAKE_PRIVATE_KEY_PASSPHRASE=...
+unset SNOWFLAKE_AUTHENTICATOR
+```
+
 If you prefer browser-based authentication locally, leave `SNOWFLAKE_PASSWORD` unset and keep `SNOWFLAKE_AUTHENTICATOR` unset or set it to `externalbrowser`.
 
 For convenience, you can also use:
@@ -105,3 +114,29 @@ Selection is driven by `WAREHOUSE_TARGET`, falling back to `DBT_TARGET`.
 
 This is the right pattern when the same asset logic needs to write raw tables in both environments
 without hardcoding a backend-specific client at the asset call site.
+
+## Warehouse Smoke Test Path
+
+The repository now includes a deterministic Dagster raw asset, `warehouse_test_input`, that writes a
+small table named `warehouse_test_input` into `DBT_SCHEMA_RAW` using the shared `warehouse`
+resource. A dbt staging model and final summary model then build on top of that raw table.
+
+Run the local smoke path:
+
+```bash
+make init-db
+uv run python -c "from cockpit.assets import warehouse_test_input; from dagster import materialize; from cockpit.resources import WarehouseResource; materialize([warehouse_test_input], resources={'warehouse': WarehouseResource(target='local')})"
+cd dbt && DBT_TARGET=local uv run dbt build --select stg_test_asset fct_test_asset_summary
+```
+
+Run the Snowflake smoke path against a pre-created schema:
+
+```bash
+export WAREHOUSE_TARGET=prod
+uv run python -c "from cockpit.assets import warehouse_test_input; from dagster import materialize; from cockpit.resources import WarehouseResource; materialize([warehouse_test_input], resources={'warehouse': WarehouseResource(target='prod')})"
+cd dbt && DBT_TARGET=prod uv run dbt build --select stg_test_asset fct_test_asset_summary
+```
+
+Snowflake production runs assume `DBT_SCHEMA_RAW` and `DBT_SCHEMA_TRANSFORM` already exist and are
+granted to the service role. The smoke asset may replace the test table inside that schema, but it
+does not attempt to create the schema in Snowflake.

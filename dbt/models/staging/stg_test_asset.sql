@@ -1,1 +1,6 @@
-select 1 as id, 'Delta Platform' as platform_name, current_timestamp as loaded_at
+select
+    cast(id as {{ dbt.type_int() }}) as id,
+    platform_name,
+    cast(amount as {{ dbt.type_numeric() }}) as amount,
+    cast(loaded_at as {{ dbt.type_timestamp() }}) as loaded_at
+from {{ source('warehouse_smoke', 'warehouse_test_input') }}
