@@ -23,7 +23,7 @@ Read these first when the change is not trivial:
 
 - `AGENTS.md`
 - `specs/BACKLOG.md`
-- `specs/legacy-basin-baseline/` when the work touches migration 
+- `specs/legacy-basin-baseline/` when the work touches migration
 
 ## Working Style
 

@@ -23,13 +23,9 @@ class WarehouseResource(ConfigurableResource):
                 "database": os.getenv("SNOWFLAKE_DATABASE"),
                 "warehouse": os.getenv("SNOWFLAKE_WAREHOUSE"),
                 "schema": os.getenv("DBT_SCHEMA_RAW", "src_byod_mitos"),
-                "authenticator": os.getenv(
-                    "SNOWFLAKE_AUTHENTICATOR", "externalbrowser"
-                ),
+                "authenticator": os.getenv("SNOWFLAKE_AUTHENTICATOR", "externalbrowser"),
             }
-            return {
-                key: value for key, value in config.items() if value not in (None, "")
-            }
+            return {key: value for key, value in config.items() if value not in (None, "")}
 
         return {
             "kind": "postgres",
