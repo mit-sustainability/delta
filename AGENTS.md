@@ -56,6 +56,7 @@ Slash-style names here are workflow aliases, not native Codex CLI commands.
 ## Repository Expectations
 
 - Warehouse Dialect Parity: Preserve the distinction between PostgreSQL (Local/Test) and Snowflake (Production). Logic MUST be valid in both dialects; use dbt macros to abstract Snowflake-specific syntax (e.g., QUALIFY) to ensure local tests pass.
+- dbt Model Rule: New dbt models may be written Snowflake-first, but if they are expected to build on `DBT_TARGET=local`, any Snowflake-only SQL MUST be isolated behind adapter-aware macros. Do not leave Snowflake-only syntax inline in a model body that is meant to run against local Postgres.
 - Dependency Integrity: Any new Python library or dbt package must be explicitly added to the relevant environment config (pyproject.toml, packages.yml). Do not "ghost" imports.
 - Idempotency: All ingestion and transformation logic MUST be idempotent. Retrying a partially failed job must not result in duplicate records or state corruption.
 - Minimal Surface: Broad refactors are forbidden unless separated into a dedicated "Refactor" task.

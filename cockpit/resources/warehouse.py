@@ -75,9 +75,14 @@ class WarehouseResource(ConfigurableResource):
         else:
             import psycopg2
 
-            # Keep schema available to callers building SQL, but don't pass it to psycopg2.
-            config.pop("schema", None)
+            schema = config.pop("schema", None)
             connection = psycopg2.connect(**config)
+            if schema:
+                cursor = connection.cursor()
+                try:
+                    cursor.execute(f"SET search_path TO {schema}")
+                finally:
+                    cursor.close()
 
         try:
             yield connection

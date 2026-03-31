@@ -48,3 +48,20 @@
 - Scope: `notebooks/`, notebook sync documentation in `README.md` or `notebooks/README.md`, and any minimal helper or validation code needed to inventory synced notebook files.
 - Verification: produce a state-diff report comparing the intended Snowflake notebook inventory to committed files under `./notebooks`, plus automated validation if a helper or manifest is added.
 - Notes: define the canonical repo layout, file naming rules, and whether Snowflake remains the source of truth or the repo becomes the reviewed handoff point after sync.
+
+## DELTA-002: Add Snowflake-to-Postgres dbt adapter macros
+
+- Status: todo
+- Priority: high
+- Domain: dbt
+- Owner: unassigned
+- Design Required: no
+- Dependencies: none
+- Legacy Reference: none
+- Parity Required: yes
+- Linked Issue: none
+- Linked Spec: none
+- Outcome: dbt model authors can write Snowflake-first warehouse logic while local Postgres builds remain supported through explicit adapter-aware macros.
+- Scope: `dbt/macros/`, dbt model conventions, and any targeted model updates required to replace inline Snowflake-only SQL with dispatched macros.
+- Verification: automated dbt validation on both `DBT_TARGET=local` and `DBT_TARGET=prod` for any models that adopt the new macros.
+- Notes: prefer Snowflake SQL in model design, but any syntax that does not run on local Postgres must move behind adapter-dispatched macros rather than remain inline in model bodies.

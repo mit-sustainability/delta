@@ -19,20 +19,29 @@ To use Snowflake Git integration for notebooks:
 ## Local Development
 
 ```bash
-# 1. Install dependencies in a Python 3.13 environment
-uv sync --python 3.13
+# 1. Install runtime and dev dependencies in a Python 3.13 environment
+uv sync --python 3.13 --extra dev
 
-# 2. Initialize local development database + schemas on Postgres (default: localhost:5432)
+# 2. Install git hooks for local checks
+uv run pre-commit install
+
+# 3. Initialize local development database + schemas on Postgres (default: localhost:5432)
 make init-db
 
-# 3. Build dbt dependencies and run the local target
+# 4. Build dbt dependencies and run the local target
 cd dbt
 dbt deps
 DBT_TARGET=local dbt build
 
-# 4. Start Dagster local development server
+# 5. Start Dagster local development server
 cd ..
 dagster dev
+```
+
+To run the configured hooks manually without creating a commit:
+
+```bash
+uv run pre-commit run --all-files
 ```
 
 ## Environment Targets

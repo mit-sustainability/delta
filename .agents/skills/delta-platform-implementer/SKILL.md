@@ -1,13 +1,13 @@
 ---
-name: "basin-dagster-asset-implementer"
-description: "Use for implementing or modifying BASIN Dagster assets, jobs, resources, and adjacent dbt-facing pipeline code. Trigger for new pipelines, new assets, changed job selections, resource work, and most routine data-platform feature development."
-compatibility: "BASIN repository with backlog-first workflow and baseline docs under specs/001-platform-baseline/"
+name: "delta-dagster-asset-implementer"
+description: "Use for implementing or modifying DELTA Dagster assets, jobs, resources, and adjacent dbt-facing pipeline code. Trigger for new pipelines, new assets, changed job selections, resource work, and most routine data-platform feature development."
+compatibility: "DELTA repository with backlog-first workflow and baseline docs under specs/001-platform-baseline/"
 metadata:
   author: "repo-local"
   source: "AGENTS.md and repository workflow"
 ---
 
-# BASIN Dagster Asset Implementer
+# DELTA Dagster Asset Implementer
 
 Use this skill for production work in this repository when the primary task is to add, modify, or connect:
 
@@ -23,8 +23,7 @@ Read these first when the change is not trivial:
 
 - `AGENTS.md`
 - `specs/BACKLOG.md`
-- `specs/001-platform-baseline/spec.md`
-- `specs/001-platform-baseline/contracts/runtime-contracts.md`
+- `specs/legacy-basin-baseline/` when the work touches migration
 
 ## Working Style
 
@@ -135,6 +134,8 @@ If the answer is mostly no, do not extract it.
 - New pipeline work usually does not need a dedicated feature spec folder.
 - New behavior should still map cleanly to a backlog item.
 - If the change touches schedules, deployment, or external integrations, check whether the baseline docs need updates.
+- For dbt model work, prefer Snowflake-first SQL, but if the model is expected to run on `DBT_TARGET=local`, move Snowflake-only syntax behind adapter-dispatched macros instead of leaving it inline in the model body.
+- Treat local Postgres compatibility as an explicit implementation concern for shared models, and verify it with dbt on the local target rather than relying on SQLFluff.
 
 ## Deliverable
 
