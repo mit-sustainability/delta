@@ -19,41 +19,98 @@ To use Snowflake Git integration for notebooks:
 ## Local Development
 
 ```bash
-# 1. Install dependencies
-pip install -e ".[dev]"
+# 1. Install runtime and dev dependencies in a Python 3.13 environment
+uv sync --python 3.13 --extra dev
 
-# 2. Initialize local dev database + schemas on your existing local Postgres (default: localhost:5432)
+# 2. Install git hooks for local checks
+uv run pre-commit install
+
+# 3. Initialize local development database + schemas on Postgres (default: localhost:5432)
 make init-db
 
-# 3. Build dbt manifest (if not automatically handled)
+# 4. Build dbt dependencies and run the local target
 cd dbt
 dbt deps
+DBT_TARGET=local dbt build
 
-# 4. Start Dagster local development server
+# 5. Start Dagster local development server
 cd ..
 dagster dev
+```
+
+To run the configured hooks manually without creating a commit:
+
+```bash
+uv run pre-commit run --all-files
 ```
 
 ## Environment Targets
 
 `dbt/profiles.yml` already maps targets as:
-- `dev` -> PostgreSQL (local, from `POSTGRES_*` env vars)
+- `local` -> PostgreSQL (local or test, from `POSTGRES_*` env vars)
 - `prod` -> Snowflake (from `SNOWFLAKE_*` env vars)
 
 Use `.envrc` for local defaults:
-- `DBT_TARGET=dev`
+- `DBT_TARGET=local`
 - `POSTGRES_PORT=5432`
 
-Switch to production runs explicitly:
+Switch targets explicitly:
+
+```bash
+export DBT_TARGET=local
+dbt build
+```
 
 ```bash
 export DBT_TARGET=prod
 export SNOWFLAKE_ACCOUNT=...
 export SNOWFLAKE_USER=...
-export SNOWFLAKE_PASSWORD=...
 export SNOWFLAKE_ROLE=...
 export SNOWFLAKE_DATABASE=...
 export SNOWFLAKE_WAREHOUSE=...
 ```
 
-Then run `dbt build` (or Dagster Snowflake assets) against Snowflake.
+If you want password authentication for non-interactive production runs, add:
+
+```bash
+export SNOWFLAKE_PASSWORD=...
+export SNOWFLAKE_AUTHENTICATOR=snowflake
+```
+
+If you prefer browser-based authentication locally, leave `SNOWFLAKE_PASSWORD` unset and keep `SNOWFLAKE_AUTHENTICATOR` unset or set it to `externalbrowser`.
+
+For convenience, you can also use:
+
+```bash
+make dbt-build-local
+make dbt-build-prod
+```
+
+## Local Raw Source Fixtures
+
+If a dbt model depends on a raw table that normally lands in Snowflake, keep the dbt model pointed
+at a logical `source()` and mirror that source into local Postgres for `DBT_TARGET=local`.
+
+1. Declare the raw table as a dbt source in `dbt/models/schema.yml`.
+2. Load a representative CSV fixture into local Postgres:
+
+```bash
+make load-local-raw RAW_CSV_PATH=./path/to/uploaded_table.csv RAW_TABLE=uploaded_table_example
+```
+
+The loader creates the table in `DBT_SCHEMA_RAW`, loads all columns as `TEXT`, and replaces its
+contents on each run. Downstream staging models should cast types explicitly, which keeps the local
+fixture flow simple and stable.
+
+## Dagster Warehouse Resource Pattern
+
+For Dagster raw-processing assets, use the shared `warehouse` resource in
+`cockpit/definitions.py`. It switches between:
+
+- `local`: PostgreSQL, for local or test runs
+- `prod`: Snowflake, for target-state production runs
+
+Selection is driven by `WAREHOUSE_TARGET`, falling back to `DBT_TARGET`.
+
+This is the right pattern when the same asset logic needs to write raw tables in both environments
+without hardcoding a backend-specific client at the asset call site.

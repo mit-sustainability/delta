@@ -1,11 +1,11 @@
 # Dockerfile for Delta Dagster + dbt Platform
-FROM python:3.11-slim
+FROM python:3.13-slim
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y 
-    git 
-    libpq-dev 
-    gcc 
+RUN apt-get update && apt-get install -y \
+    git \
+    libpq-dev \
+    gcc \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv for fast dependency management

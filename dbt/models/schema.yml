@@ -1,5 +1,18 @@
 version: 2
 
+sources:
+  - name: raw_uploads
+    description: >
+      Raw tables loaded by Dagster or local fixture scripts. In production these tables live in
+      Snowflake; in local development they are mirrored into PostgreSQL under DBT_SCHEMA_RAW so
+      downstream dbt models can still build against the same source contract.
+    schema: "{{ env_var('DBT_SCHEMA_RAW', 'src_byod_mitos') }}"
+    tables:
+      - name: uploaded_table_example
+        description: >
+          Example placeholder for a manually uploaded or Data Hub-derived raw table. Keep the table
+          name and columns consistent across Snowflake and local Postgres.
+
 models:
   - name: _raw_placeholder
     description: Placeholder model for raw layer structure.

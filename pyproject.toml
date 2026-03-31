@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "delta"
 version = "0.1.0"
 description = "Project Delta: Dagster + dbt for Snowflake"
-requires-python = ">=3.11"
+requires-python = ">=3.13"
 dependencies = [
     "dagster",
     "dagster-webserver",
@@ -22,6 +22,7 @@ dependencies = [
 dev = [
     "pytest",
     "pre-commit",
+    "ruff",
     "sqlfluff-templater-dbt",
 ]
 
@@ -30,3 +31,14 @@ module_name = "cockpit"
 
 [tool.setuptools.packages.find]
 include = ["cockpit*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+]
