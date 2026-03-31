@@ -23,9 +23,13 @@ class WarehouseResource(ConfigurableResource):
                 "database": os.getenv("SNOWFLAKE_DATABASE"),
                 "warehouse": os.getenv("SNOWFLAKE_WAREHOUSE"),
                 "schema": os.getenv("DBT_SCHEMA_RAW", "src_byod_mitos"),
-                "authenticator": os.getenv("SNOWFLAKE_AUTHENTICATOR", "externalbrowser"),
+                "authenticator": os.getenv(
+                    "SNOWFLAKE_AUTHENTICATOR", "externalbrowser"
+                ),
             }
-            return {key: value for key, value in config.items() if value not in (None, "")}
+            return {
+                key: value for key, value in config.items() if value not in (None, "")
+            }
 
         return {
             "kind": "postgres",
@@ -49,7 +53,14 @@ class WarehouseResource(ConfigurableResource):
         else:
             import psycopg2
 
+            schema = config.pop("schema", None)
             connection = psycopg2.connect(**config)
+            if schema:
+                cursor = connection.cursor()
+                try:
+                    cursor.execute(f"SET search_path TO {schema}")
+                finally:
+                    cursor.close()
 
         try:
             yield connection
