@@ -31,3 +31,20 @@
 ## Active Backlog
 
 <!-- Add backlog items below this line -->
+
+## DELTA-001: Sync Snowflake notebooks into repo
+
+- Status: todo
+- Priority: medium
+- Domain: warehouse
+- Owner: unassigned
+- Design Required: plan
+- Dependencies: Snowflake Git integration access and an agreed source notebook inventory
+- Legacy Reference: none
+- Parity Required: no
+- Linked Issue: none
+- Linked Spec: none
+- Outcome: Snowflake-authored notebooks are version controlled under `./notebooks` with a repeatable sync workflow that operators can run without ad hoc file copying.
+- Scope: `notebooks/`, notebook sync documentation in `README.md` or `notebooks/README.md`, and any minimal helper or validation code needed to inventory synced notebook files.
+- Verification: produce a state-diff report comparing the intended Snowflake notebook inventory to committed files under `./notebooks`, plus automated validation if a helper or manifest is added.
+- Notes: define the canonical repo layout, file naming rules, and whether Snowflake remains the source of truth or the repo becomes the reviewed handoff point after sync.
