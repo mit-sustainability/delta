@@ -1,0 +1,9 @@
+selectors:
+  - name: mitos
+    definition:
+      method: path
+      value: models/mitos
+  - name: css
+    definition:
+      method: path
+      value: models/css

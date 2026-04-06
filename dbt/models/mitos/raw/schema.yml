@@ -3,10 +3,10 @@ version: 2
 sources:
   - name: raw_uploads
     description: >
-      Raw tables loaded by Dagster or local fixture scripts. In production these tables live in
-      Snowflake; in local development they are mirrored into PostgreSQL under DBT_SCHEMA_RAW so
-      downstream dbt models can still build against the same source contract.
-    schema: "{{ env_var('DBT_SCHEMA_RAW', 'src_byod_mitos') }}"
+      MITOS raw tables loaded by Dagster or local fixture scripts. In production these tables live in
+      Snowflake; in local development they are mirrored into PostgreSQL under the MITOS raw schema
+      so downstream dbt models can still build against the same source contract.
+    schema: "{{ env_var('DBT_SCHEMA_MITOS_RAW', env_var('DBT_SCHEMA_RAW', 'src_byod_mitos')) }}"
     tables:
       - name: uploaded_table_example
         description: >
@@ -16,7 +16,7 @@ sources:
     description: >
       Deterministic warehouse smoke-test table written by a Dagster asset in either local Postgres
       or Snowflake, then consumed by dbt to validate raw-to-transform lineage.
-    schema: "{{ env_var('DBT_SCHEMA_RAW', 'src_byod_mitos') }}"
+    schema: "{{ env_var('DBT_SCHEMA_MITOS_RAW', env_var('DBT_SCHEMA_RAW', 'src_byod_mitos')) }}"
     tables:
       - name: warehouse_test_input
         description: >
@@ -25,4 +25,4 @@ sources:
 
 models:
   - name: _raw_placeholder
-    description: Placeholder model for raw layer structure.
+    description: Placeholder model for MITOS raw layer structure.

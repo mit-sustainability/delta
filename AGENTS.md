@@ -77,3 +77,10 @@ Use these repo-local skills when the task matches:
 - `.agents/skills/speckit-specify/`, `.agents/skills/speckit-clarify/`, `.agents/skills/speckit-plan/`, `.agents/skills/speckit-tasks/`, and `.agents/skills/speckit-analyze/` for feature design and planning workflows.
 
 Cloud execution agents should normally pick up one concrete backlog item or one task from `tasks.md`, not an entire feature.
+
+## Active Technologies
+- Python 3.13 + SQL (dbt) + Dagster, dagster-dbt, dbt-core, dbt-postgres, dbt-snowflake (003-mitos-css-scope-planning)
+- PostgreSQL (local/test) and Snowflake (prod target) (003-mitos-css-scope-planning)
+
+## Recent Changes
+- 003-mitos-css-scope-planning: Added Python 3.13 + SQL (dbt) + Dagster, dagster-dbt, dbt-core, dbt-postgres, dbt-snowflake

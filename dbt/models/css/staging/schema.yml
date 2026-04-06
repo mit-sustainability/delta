@@ -1,0 +1,5 @@
+version: 2
+
+models:
+  - name: _staging_placeholder
+    description: Placeholder model for CSS staging layer structure.

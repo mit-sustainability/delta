@@ -65,3 +65,20 @@
 - Scope: `dbt/macros/`, dbt model conventions, and any targeted model updates required to replace inline Snowflake-only SQL with dispatched macros.
 - Verification: automated dbt validation on both `DBT_TARGET=local` and `DBT_TARGET=prod` for any models that adopt the new macros.
 - Notes: prefer Snowflake SQL in model design, but any syntax that does not run on local Postgres must move behind adapter-dispatched macros rather than remain inline in model bodies.
+
+## DELTA-003: Introduce MITOS/CSS domain structure for Dagster and dbt
+
+- Status: in_progress
+- Priority: high
+- Domain: orchestration
+- Owner: codex
+- Design Required: plan
+- Dependencies: none
+- Legacy Reference: MITOS-only defaults in current dbt schemas/groups
+- Parity Required: yes
+- Linked Issue: none
+- Linked Spec: `specs/003-mitos-css-scope-planning/spec.md`
+- Outcome: Repository structure and runtime selection patterns support independent MITOS and CSS scopes across Dagster and dbt.
+- Scope: `cockpit/assets/`, `cockpit/definitions.py`, `dbt/models/`, `dbt/dbt_project.yml`, `dbt/selectors.yml`, and planning docs under `specs/003-mitos-css-scope-planning/`.
+- Verification: domain-targeted Dagster selection checks plus `dbt build` in local/prod for both domain selectors.
+- Notes: keep MITOS as transitional default until explicit domain parameterization is complete.
