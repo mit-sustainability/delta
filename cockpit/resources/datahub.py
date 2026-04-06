@@ -94,9 +94,12 @@ class DataHubResource:
     def get_project_id(self, project_name):
         """Return the project_id for the project with the given name."""
         projects = self.list_projects()
+        if not projects:
+            logger.error("Unable to retrieve projects from Data Hub; cannot resolve project_id.")
+            return None
         for project in projects:
-            if project["display_name"] == project_name:
-                return project["project_id"]
+            if project.get("display_name") == project_name:
+                return project.get("project_id")
 
     def get_download_link(self, file_id):
         """Return a download link for the file"""
