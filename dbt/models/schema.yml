@@ -12,6 +12,16 @@ sources:
         description: >
           Example placeholder for a manually uploaded or Data Hub-derived raw table. Keep the table
           name and columns consistent across Snowflake and local Postgres.
+  - name: warehouse_smoke
+    description: >
+      Deterministic warehouse smoke-test table written by a Dagster asset in either local Postgres
+      or Snowflake, then consumed by dbt to validate raw-to-transform lineage.
+    schema: "{{ env_var('DBT_SCHEMA_RAW', 'src_byod_mitos') }}"
+    tables:
+      - name: warehouse_test_input
+        description: >
+          Small raw smoke-test table whose rows are rewritten on each Dagster run. Snowflake
+          assumes the target schema already exists.
 
 models:
   - name: _raw_placeholder

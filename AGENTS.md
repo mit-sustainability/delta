@@ -26,14 +26,6 @@ These files are the current source of truth for:
 
 If a repository-level baseline feature spec is created later, treat it as required context for cross-cutting work and keep this file in sync.
 
-## Legacy Basin Reference
-
-- `specs/legacy-basin-baseline/` contains reverse-engineered Basin documentation for reference only.
-- Treat it as migration context, not as the source of truth for this repository.
-- Do not read it by default for routine Delta work.
-- Read it only when a backlog item, spec, or task explicitly calls for legacy reference, parity comparison, pipeline migration context, or contract comparison.
-- If Delta behavior intentionally differs from Basin, prefer the Delta constitution, active specs, and current code paths, and document the deviation explicitly when it matters.
-
 ## Backlog-First Workflow
 
 - Treat `specs/BACKLOG.md` as the active work queue.
@@ -63,18 +55,17 @@ Slash-style names here are workflow aliases, not native Codex CLI commands.
 
 ## Repository Expectations
 
-- Preserve the distinction between PostgreSQL as the local or test warehouse path and Snowflake as the target production warehouse and query engine unless a spec explicitly changes it.
-- Preserve clear ingestion -> raw/staging -> final warehouse boundaries unless the change is intentional and documented.
-- Keep external credentials, endpoints, and runtime configuration environment-variable driven.
-- Favor minimal, verifiable changes.
-- Prefer backlog maintenance and targeted spec updates over ceremony-heavy feature specs for small pipeline work.
-- Do not normalize undocumented Basin behavior as a permanent contract without explicit acceptance.
+- Warehouse Dialect Parity: Preserve the distinction between PostgreSQL (Local/Test) and Snowflake (Production). Logic MUST be valid in both dialects; use dbt macros to abstract Snowflake-specific syntax (e.g., QUALIFY) to ensure local tests pass.
+- dbt Model Rule: New dbt models may be written Snowflake-first, but if they are expected to build on `DBT_TARGET=local`, any Snowflake-only SQL MUST be isolated behind adapter-aware macros. Do not leave Snowflake-only syntax inline in a model body that is meant to run against local Postgres.
+- Dependency Integrity: Any new Python library or dbt package must be explicitly added to the relevant environment config (pyproject.toml, packages.yml). Do not "ghost" imports.
+- Idempotency: All ingestion and transformation logic MUST be idempotent. Retrying a partially failed job must not result in duplicate records or state corruption.
+- Minimal Surface: Broad refactors are forbidden unless separated into a dedicated "Refactor" task.
 
 ## Preferred Execution Pattern
 
-- For routine and well-scoped backlog items: update backlog context, implement directly, and verify.
-- For ambiguous or cross-cutting work: create or update a feature spec first, then plan, then tasks if needed.
-- New feature work should normally include both implementation and verification updates, even when the change is small.
+- Routine: Update backlog -> Implement -> Verify (Automated).
+- Complex: Create/Update Spec -> Plan -> Tasks -> Implement.
+- Migration: When replacing Basin, do not normalize undocumented legacy behavior. If a Basin logic path is preserved, it must have an explicit TODO for eventual removal.
 
 ## Preferred Personas
 

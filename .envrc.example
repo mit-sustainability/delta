@@ -1,0 +1,53 @@
+# Delta local environment
+
+# Shared dbt schema defaults
+export DBT_SCHEMA_RAW=xxx
+export DBT_SCHEMA_TRANSFORM=xxx
+export DBT_THREADS=4
+
+# Dagster
+export DAGSTER_HOME="$(pwd)/.dagster"
+mkdir -p "$DAGSTER_HOME"
+
+# Local Postgres defaults
+export POSTGRES_HOST=localhost
+export POSTGRES_USER=xxx
+export POSTGRES_DB=xxx
+export POSTGRES_PORT=5432
+# Uncomment if your local Postgres requires a password.
+# export POSTGRES_PASSWORD=...
+
+# Snowflake defaults
+export SNOWFLAKE_ACCOUNT=xxx
+export SNOWFLAKE_USER=xxx
+export SNOWFLAKE_ROLE=xxx
+export SNOWFLAKE_DATABASE=xxx
+export SNOWFLAKE_WAREHOUSE=xxx
+# Choose one auth mode for prod work.
+export SNOWFLAKE_AUTHENTICATOR=snowflake
+export SNOWFLAKE_PASSWORD=xxx
+# export SNOWFLAKE_AUTHENTICATOR=externalbrowser -- local interactive
+# export SNOWFLAKE_PRIVATE_KEY_PATH=...
+# export SNOWFLAKE_PRIVATE_KEY_PASSPHRASE=...
+
+use_env_local() {
+  export DBT_TARGET=local
+  export WAREHOUSE_TARGET=local
+  unset SNOWFLAKE_PASSWORD
+  unset SNOWFLAKE_PRIVATE_KEY_PATH
+  unset SNOWFLAKE_PRIVATE_KEY_PASSPHRASE
+  unset SNOWFLAKE_AUTHENTICATOR
+  echo "Delta environment set to local (Postgres)."
+}
+
+use_env_prod() {
+  export DBT_TARGET=prod
+  export WAREHOUSE_TARGET=prod
+  export DBT_SCHEMA_RAW=xxx
+  export DBT_SCHEMA_TRANSFORM=xxx
+  export DBT_THREADS=8
+  echo "Delta environment set to prod (Snowflake)."
+}
+
+# Default shell target
+use_env_local

@@ -1,5 +1,16 @@
 version: 2
 
 models:
+  - name: fct_test_asset_summary
+    description: Final smoke-test summary derived from the warehouse staging model.
+    columns:
+      - name: row_count
+        description: Number of rows written by the Dagster smoke asset.
+      - name: total_amount
+        description: Sum of the staged numeric amount column.
+      - name: first_loaded_at
+        description: Earliest staged load timestamp.
+      - name: last_loaded_at
+        description: Latest staged load timestamp.
   - name: _final_placeholder
     description: Placeholder model for final layer structure.

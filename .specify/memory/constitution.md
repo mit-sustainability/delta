@@ -22,7 +22,7 @@ This repository exists to replace Basin and move warehouse outcomes to Snowflake
 
 ## Repository Constraints
 
-- Primary stack: Python 3.14 orchestration plus dbt-managed warehouse transformations.
+- Primary stack: Python 3.13 orchestration plus dbt-managed warehouse transformations.
 - Warehouse topology: PostgreSQL remains the local or testing warehouse path controlled by dbt; Snowflake is the target production warehouse and query engine.
 - Data movement path: external source or API -> Dagster asset or ingestion step -> PostgreSQL landing or staging for local and test workflows when applicable -> dbt transformation layers -> Snowflake warehouse outputs for target-state production use.
 - Runtime configuration is environment-variable driven; secrets are not committed to the repository.

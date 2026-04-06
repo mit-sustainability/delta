@@ -2,11 +2,13 @@ version: 2
 
 models:
   - name: stg_test_asset
-    description: Sample staging model for connectivity checks.
+    description: Staging model for the cross-warehouse smoke-test raw table.
     columns:
       - name: id
         description: Synthetic identifier.
       - name: platform_name
         description: Source platform label.
+      - name: amount
+        description: Numeric amount cast from the raw text source.
       - name: loaded_at
-        description: Record load timestamp.
+        description: Record load timestamp cast from the raw text source.

@@ -134,6 +134,8 @@ If the answer is mostly no, do not extract it.
 - New pipeline work usually does not need a dedicated feature spec folder.
 - New behavior should still map cleanly to a backlog item.
 - If the change touches schedules, deployment, or external integrations, check whether the baseline docs need updates.
+- For dbt model work, prefer Snowflake-first SQL, but if the model is expected to run on `DBT_TARGET=local`, move Snowflake-only syntax behind adapter-dispatched macros instead of leaving it inline in the model body.
+- Treat local Postgres compatibility as an explicit implementation concern for shared models, and verify it with dbt on the local target rather than relying on SQLFluff.
 
 ## Deliverable
 

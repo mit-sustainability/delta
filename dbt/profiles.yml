@@ -20,5 +20,7 @@ delta:
       database: "{{ env_var('SNOWFLAKE_DATABASE') }}"
       warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
       schema: "{{ env_var('DBT_SCHEMA_TRANSFORM', 'rpt_mitos') }}"
-      authenticator: "{{ env_var('SNOWFLAKE_AUTHENTICATOR', 'externalbrowser') }}"
+      authenticator: "{{ '' if env_var('SNOWFLAKE_PRIVATE_KEY_PATH', '') else env_var('SNOWFLAKE_AUTHENTICATOR', 'externalbrowser') }}"
+      private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH', '') }}"
+      private_key_passphrase: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PASSPHRASE', '') }}"
       threads: "{{ env_var('DBT_THREADS', 8) | int }}"
