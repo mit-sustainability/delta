@@ -119,19 +119,24 @@ class DataHubResource:
         # Allow advance search with additional parameters
         data.update(kwargs)
         res = requests.post(url, headers=self.headers, json=data, timeout=default_timeout)
-        if res.status_code == 200:
-            files = res.json()["data"]
-            logger.info(f"Successfully found files: {files}")
-        else:
-            logger.error(f"Fail to find the file with name {search_term} in project {project_id}.")
-        try:
-            download_links = [self.get_download_link(file["hash_id"]) for file in files]
-            logger.info(f"Successfully obtained {len(download_links)} download links.")
-            return download_links
-        except UnboundLocalError:
-            logger.error("Fail to find any downloadable links.")
+        if res.status_code != 200:
+            logger.error(
+                f"Fail to find the file with name {search_term} in project {project_id} "
+                f"(status_code={res.status_code})."
+            )
             return None
 
+        files = res.json()["data"]
+        if not files:
+            logger.info(
+                f"No files found for search term {search_term} in project {project_id}."
+            )
+            return []
+
+        logger.info(f"Successfully found files: {files}")
+        download_links = [self.get_download_link(file["hash_id"]) for file in files]
+        logger.info(f"Successfully obtained {len(download_links)} download links.")
+        return download_links
     def get_upload_link(self, meta):
         """Get upload link to datahub"""
         self._ensure_authorized()
