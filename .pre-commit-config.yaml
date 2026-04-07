@@ -18,7 +18,20 @@ repos:
     rev: 4.0.4
     hooks:
       - id: sqlfluff-lint
-        args: [--dialect, snowflake]
+        name: sqlfluff-lint-offline
+        args: [--config, .sqlfluff]
+      - id: sqlfluff-lint
+        name: sqlfluff-lint-local
+        stages: [manual]
+        args: [--config, .sqlfluff.local]
+        additional_dependencies:
+          - sqlfluff-templater-dbt
+          - dbt-postgres
+          - dbt-snowflake
+      - id: sqlfluff-lint
+        name: sqlfluff-lint-prod
+        stages: [manual]
+        args: [--config, .sqlfluff.prod]
         additional_dependencies:
           - sqlfluff-templater-dbt
           - dbt-postgres

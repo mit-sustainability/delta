@@ -48,6 +48,14 @@ To run the configured hooks manually without creating a commit:
 uv run pre-commit run --all-files
 ```
 
+The default `sqlfluff` hook is offline and does not require a live warehouse
+connection. Adapter-aware dbt lint remains available as explicit manual checks:
+
+```bash
+uv run pre-commit run --hook-stage manual sqlfluff-lint-local --all-files
+uv run pre-commit run --hook-stage manual sqlfluff-lint-prod --all-files
+```
+
 ## Environment Targets
 
 `dbt/profiles.yml` already maps targets as:
