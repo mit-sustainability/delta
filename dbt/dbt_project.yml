@@ -22,7 +22,7 @@ packages:
 
 models:
   delta:
-    +snowflake_warehouse: "BA_WAREHOUSE"
+    +snowflake_warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE', 'BA_WAREHOUSE') }}"
     +persist_docs:
       relation: true
       columns: true
