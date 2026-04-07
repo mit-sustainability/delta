@@ -6,7 +6,11 @@ Delta is the evolution of the `basin` data platform, migrated to use **Snowflake
 
 This is a monorepo that contains:
 1. **`dbt/`**: Data transformations, modeling, and query management, driven by `dbt-snowflake`. Warehouse schemas follow `raw`, `staging`, and `final`.
-2. **`cockpit/`**: The Dagster orchestration layer that parses the dbt manifest and triggers jobs on schedules/sensors.
+2. **`cockpit/`**: The Dagster orchestration layer, organized by shared concerns and scope packages:
+   - `cockpit/shared/`: shared resources, dbt wiring, IO managers, schedules, sensors
+   - `cockpit/core/`: shared Python-managed assets and jobs
+   - `cockpit/mitos/`: MITOS-owned orchestration code
+   - `cockpit/css/`: CSS-owned orchestration code
 3. **`notebooks/`**: Directory intended for git sync with Snowflake UI-generated Notebooks.
 
 ## Snowflake UI Notebook Integration
@@ -35,7 +39,7 @@ DBT_TARGET=local dbt build
 
 # 5. Start Dagster local development server
 cd ..
-dagster dev
+uv run dg dev
 ```
 
 To run the configured hooks manually without creating a commit:
@@ -100,41 +104,55 @@ make dbt-build-prod
 If a dbt model depends on a raw table that normally lands in Snowflake, keep the dbt model pointed
 at a logical `source()` and mirror that source into local Postgres for `DBT_TARGET=local`.
 
-1. Declare the raw table as a dbt source in `dbt/models/schema.yml`.
-2. Load a representative CSV fixture into local Postgres:
+1. Declare the upstream table as a dbt source in the owning domain `sources.yml`.
+2. Point that source at either an external Snowflake schema or a local mirrored Postgres schema via env vars.
+3. Load a representative CSV fixture into local Postgres when you want local `DBT_TARGET=local` builds:
 
 ```bash
 make load-local-raw RAW_CSV_PATH=./path/to/uploaded_table.csv RAW_TABLE=uploaded_table_example
 ```
 
-The loader creates the table in `DBT_SCHEMA_RAW`, loads all columns as `TEXT`, and replaces its
+Optionally choose the target mirror schema explicitly:
+
+```bash
+make load-local-raw RAW_CSV_PATH=./path/to/uploaded_table.csv RAW_TABLE=uploaded_table_example RAW_SCHEMA=src_external_ops_local
+```
+
+The loader creates the table in the requested schema, loads all columns as `TEXT`, and replaces its
 contents on each run. Downstream staging models should cast types explicitly, which keeps the local
-fixture flow simple and stable.
+fixture flow simple and stable. Source schemas can be switched per source contract with env vars such
+as `MITOS_RAW_UPLOADS_SOURCE_SCHEMA`, `MITOS_WAREHOUSE_SMOKE_SOURCE_SCHEMA`, or
+`CSS_RAW_UPLOADS_SOURCE_SCHEMA`.
 
-## Dagster Warehouse Resource Pattern
+## Dagster Warehouse IO Manager Pattern
 
-For Dagster raw-processing assets, use the shared `warehouse` resource in
-`cockpit/definitions.py`. It switches between:
+For Python-managed Dagster warehouse assets, use a stable logical IO manager key in the asset
+definition, then bind that key from the owning `defs.py`.
 
-- `local`: PostgreSQL, for local or test runs
-- `prod`: Snowflake, for target-state production runs
+At runtime the binding switches between:
 
-Selection is driven by `WAREHOUSE_TARGET`, falling back to `DBT_TARGET`.
+- `local`: a Postgres IO manager
+- `prod`: a Snowflake IO manager
 
-This is the right pattern when the same asset logic needs to write raw tables in both environments
-without hardcoding a backend-specific client at the asset call site.
+Selection is driven by `WAREHOUSE_TARGET`, falling back to `DBT_TARGET`, via
+`build_warehouse_io_manager(...)` in `cockpit/shared/resources/io_managers.py`.
+
+This keeps asset code backend-agnostic: the asset declares a logical key such as
+`raw_io_manager`, while the scope `defs.py` chooses the environment-specific implementation and
+schema.
 
 ## Warehouse Smoke Test Path
 
-The repository now includes a deterministic Dagster raw asset, `warehouse_test_input`, that writes a
-small table named `warehouse_test_input` into `DBT_SCHEMA_RAW` using the shared `warehouse`
-resource. A dbt staging model and final summary model then build on top of that raw table.
+The repository now includes a deterministic core Dagster raw asset,
+`cockpit.core.assets.warehouse_test_input`, that writes a small table named
+`warehouse_test_input` through the logical `raw_io_manager`. A dbt staging/final path can then
+build on top of that raw table.
 
 Run the local smoke path:
 
 ```bash
 make init-db
-uv run python -c "from cockpit.assets import warehouse_test_input; from dagster import materialize; from cockpit.resources import WarehouseResource; materialize([warehouse_test_input], resources={'warehouse': WarehouseResource(target='local')})"
+uv run python -c "from cockpit.core.assets import warehouse_test_input; from dagster import materialize; from cockpit.shared.resources import build_warehouse_io_manager; materialize([warehouse_test_input], resources={'raw_io_manager': build_warehouse_io_manager('local', 'src_byod_core')})"
 cd dbt && DBT_TARGET=local uv run dbt build --select stg_test_asset fct_test_asset_summary
 ```
 
@@ -142,24 +160,24 @@ Run the Snowflake smoke path against a pre-created schema:
 
 ```bash
 export WAREHOUSE_TARGET=prod
-uv run python -c "from cockpit.assets import warehouse_test_input; from dagster import materialize; from cockpit.resources import WarehouseResource; materialize([warehouse_test_input], resources={'warehouse': WarehouseResource(target='prod')})"
+uv run python -c "from cockpit.core.assets import warehouse_test_input; from dagster import materialize; from cockpit.shared.resources import build_warehouse_io_manager; materialize([warehouse_test_input], resources={'raw_io_manager': build_warehouse_io_manager('prod', 'src_byod_core')})"
 cd dbt && DBT_TARGET=prod uv run dbt build --select stg_test_asset fct_test_asset_summary
 ```
 
-Snowflake production runs assume `DBT_SCHEMA_RAW` and `DBT_SCHEMA_TRANSFORM` already exist and are
+Snowflake production runs assume the target schemas already exist and are
 granted to the service role. The smoke asset may replace the test table inside that schema, but it
 does not attempt to create the schema in Snowflake.
 
 ## Automated Verification Coverage
 
-Recent smoke-path changes have automated unit coverage in `cockpit/tests/`:
+Recent smoke-path changes have automated unit coverage in scope-local test folders:
 
-- `test_resources.py` validates `WarehouseResource` configuration selection for local Postgres and
-  prod Snowflake auth modes (private key, password, and browser auth).
-- `test_assets.py` validates that `warehouse_test_input` emits backend-specific SQL for Postgres and
-  Snowflake and records the expected metadata.
-- `test_defs.py` validates Definitions wiring and target-driven dbt resource selection
-  (`dbt_postgres` for local, `dbt_snowflake` for prod).
+- `cockpit/shared/tests/test_resources.py` validates Postgres and Snowflake resource configuration,
+  IO manager selection, and top-level Definitions wiring.
+- `cockpit/core/tests/test_core_assets.py` validates that `warehouse_test_input` emits the expected
+  warehouse payload and that the Postgres/Snowflake IO managers write the correct SQL.
+- `cockpit/core/tests/test_core_jobs.py`, `cockpit/mitos/tests/test_mitos_jobs.py`, and
+  `cockpit/css/tests/test_css_jobs.py` validate scope job registration.
 
 Run the suite with:
 

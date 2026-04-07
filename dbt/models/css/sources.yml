@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: raw_uploads_css
+    description: >
+      Raw CSS-domain source tables loaded by Dagster or fixture scripts.
+    schema: "{{ env_var('CSS_RAW_UPLOADS_SOURCE_SCHEMA', env_var('DBT_SCHEMA_CSS_RAW', 'src_byod_css')) }}"
+    tables:
+      - name: uploaded_table_example_css
+        description: CSS placeholder source table contract.
