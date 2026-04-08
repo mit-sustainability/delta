@@ -5,6 +5,12 @@ export DBT_SCHEMA_RAW=xxx
 export DBT_SCHEMA_TRANSFORM=xxx
 export DBT_THREADS=4
 
+# Optional dbt source overrides for schemas not managed by this project.
+# Leave unset to use the scope raw-schema defaults locally.
+# export MITOS_RAW_UPLOADS_SOURCE_SCHEMA=external_source_schema
+# export MITOS_WAREHOUSE_SMOKE_SOURCE_SCHEMA=src_byod_core
+# export CSS_RAW_UPLOADS_SOURCE_SCHEMA=external_css_source_schema
+
 # Dagster
 export DAGSTER_HOME="$(pwd)/.dagster"
 mkdir -p "$DAGSTER_HOME"

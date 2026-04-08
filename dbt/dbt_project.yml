@@ -27,30 +27,41 @@ models:
       relation: true
       columns: true
     +materialized: table
-    raw:
+
+    mitos:
       +meta:
         dagster:
-          group: raw
-      +schema: "{{ env_var('DBT_SCHEMA_RAW', 'src_byod_mitos') }}"
+          group: mitos
       +tags:
-        - raw
-      +materialized: table
-    staging:
+        - domain:mitos
+      staging:
+        +schema: "{{ env_var('DBT_SCHEMA_MITOS_TRANSFORM', env_var('DBT_SCHEMA_TRANSFORM', 'rpt_mitos')) }}"
+        +tags:
+          - staging
+        +materialized: view
+      final:
+        +schema: "{{ env_var('DBT_SCHEMA_MITOS_TRANSFORM', env_var('DBT_SCHEMA_TRANSFORM', 'rpt_mitos')) }}"
+        +tags:
+          - final
+        +materialized: view
+
+    css:
       +meta:
         dagster:
-          group: staging
-      +schema: "{{ env_var('DBT_SCHEMA_TRANSFORM', 'rpt_mitos') }}"
+          group: css
       +tags:
-        - staging
-      +materialized: view
-    final:
-      +meta:
-        dagster:
-          group: final
-      +schema: "{{ env_var('DBT_SCHEMA_TRANSFORM', 'rpt_mitos') }}"
-      +materialized: view
-      +tags:
-        - final
+        - domain:css
+      staging:
+        +schema: "{{ env_var('DBT_SCHEMA_CSS_TRANSFORM', 'rpt_css') }}"
+        +tags:
+          - staging
+        +materialized: view
+      final:
+        +schema: "{{ env_var('DBT_SCHEMA_CSS_TRANSFORM', 'rpt_css') }}"
+        +tags:
+          - final
+        +materialized: view
+
 seeds:
   delta:
-    +schema: "{{ env_var('DBT_SCHEMA_RAW', 'src_byod_mitos') }}"
+    +schema: "{{ env_var('DBT_SCHEMA_MITOS_RAW', env_var('DBT_SCHEMA_RAW', 'src_byod_mitos')) }}"

@@ -1,8 +1,11 @@
 [sqlfluff]
-dialect = snowflake
-templater = dbt
+dialect = postgres
+templater = jinja
 
-[sqlfluff:templater:dbt]
-project_dir = dbt
-profiles_dir = dbt
-profile = delta
+[sqlfluff:templater:jinja]
+apply_dbt_builtins = true
+load_macros_from_path = dbt/macros
+library_path = sqlfluff_libs
+
+[sqlfluff:templater:jinja:context]
+target = {"name": "local", "schema": "rpt_mitos", "database": "delta_dev", "type": "postgres"}

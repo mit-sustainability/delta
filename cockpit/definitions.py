@@ -1,23 +1,28 @@
 import os
 
 from dagster import Definitions
-from dagster_dbt import DbtCliResource
 
-from .assets import postgres_dbt_assets, snowflake_dbt_assets, warehouse_test_input
-from .dbt_project import delta_dbt_project
-from .resources import WarehouseResource
+from .core import defs as core_defs_module
+from .css import defs as css_defs_module
+from .mitos import defs as mitos_defs_module
+from .shared.resources import build_dbt_resource
+from .shared.schedules import global_schedules
+from .shared.sensors import global_sensors
 
 warehouse_target = os.getenv("WAREHOUSE_TARGET", os.getenv("DBT_TARGET", "local"))
-
-active_dbt_assets = postgres_dbt_assets if warehouse_target == "local" else snowflake_dbt_assets
 active_dbt_resource_key = "dbt_postgres" if warehouse_target == "local" else "dbt_snowflake"
 
 resources = {
-    "warehouse": WarehouseResource(target=warehouse_target),
-    active_dbt_resource_key: DbtCliResource(project_dir=delta_dbt_project),
+    active_dbt_resource_key: build_dbt_resource(),
 }
 
-defs = Definitions(
-    assets=[warehouse_test_input, active_dbt_assets],
-    resources=resources,
+defs = Definitions.merge(
+    core_defs_module.core_defs,
+    mitos_defs_module.mitos_defs,
+    css_defs_module.css_defs,
+    Definitions(
+        resources=resources,
+        schedules=global_schedules,
+        sensors=global_sensors,
+    ),
 )

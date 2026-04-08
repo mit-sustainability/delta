@@ -10,7 +10,7 @@ from psycopg2 import sql
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Load a CSV fixture into the local raw Postgres schema for dbt local builds."
+        description="Load a CSV fixture into a local Postgres source schema for dbt local builds."
     )
     parser.add_argument("--csv", required=True, help="Path to the CSV file to load.")
     parser.add_argument("--table", required=True, help="Destination raw table name.")

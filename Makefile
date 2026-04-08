@@ -30,7 +30,7 @@ dbt-build-prod:
 load-local-raw:
 	@test -n "$(RAW_CSV_PATH)" || (echo "RAW_CSV_PATH is required" >&2; exit 1)
 	@test -n "$(RAW_TABLE)" || (echo "RAW_TABLE is required" >&2; exit 1)
-	$(UV) run python scripts/load_local_raw_csv.py --csv "$(RAW_CSV_PATH)" --table "$(RAW_TABLE)"
+	$(UV) run python scripts/load_local_raw_csv.py --csv "$(RAW_CSV_PATH)" --table "$(RAW_TABLE)" $(if $(RAW_SCHEMA),--schema "$(RAW_SCHEMA)",)
 
 docker-build:
 	docker build -t delta-platform:latest .
