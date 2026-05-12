@@ -9,7 +9,7 @@ from .shared.resources import build_dbt_resource
 from .shared.schedules import global_schedules
 from .shared.sensors import global_sensors
 
-warehouse_target = os.getenv("WAREHOUSE_TARGET", os.getenv("DBT_TARGET", "local"))
+warehouse_target = os.getenv("DBT_TARGET", "local")
 active_dbt_resource_key = "dbt_postgres" if warehouse_target == "local" else "dbt_snowflake"
 
 resources = {

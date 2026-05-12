@@ -5,7 +5,7 @@ from dagster import Definitions
 from .assets import mitos_assets, mitos_postgres_dbt_assets, mitos_snowflake_dbt_assets
 from .jobs import mitos_job
 
-warehouse_target = os.getenv("WAREHOUSE_TARGET", os.getenv("DBT_TARGET", "local"))
+warehouse_target = os.getenv("DBT_TARGET", "local")
 
 active_dbt_assets = (
     mitos_postgres_dbt_assets if warehouse_target == "local" else mitos_snowflake_dbt_assets

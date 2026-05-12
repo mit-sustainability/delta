@@ -4,7 +4,48 @@ sources:
   - name: raw_uploads_css
     description: >
       Raw CSS-domain source tables loaded by Dagster or fixture scripts.
-    schema: "{{ env_var('CSS_RAW_UPLOADS_SOURCE_SCHEMA', env_var('DBT_SCHEMA_CSS_RAW', 'src_byod_css')) }}"
+    schema: "{{ env_var('CSS_RAW_UPLOADS_SOURCE_SCHEMA', env_var('DBT_SCHEMA_CSS_RAW', env_var('DBT_SCHEMA_RAW', 'src_byod_css'))) }}"
     tables:
       - name: uploaded_table_example_css
         description: CSS placeholder source table contract.
+      - name: electricity_production_report
+        description: Monthly electricity production totals loaded from DataHub (columns item, amount).
+        columns:
+          - name: item
+            tests:
+              - not_null
+          - name: amount
+            tests:
+              - not_null
+      - name: steam_production_report
+        description: Monthly steam production totals loaded from DataHub (columns item, amount).
+        columns:
+          - name: item
+            tests:
+              - not_null
+          - name: amount
+            tests:
+              - not_null
+      - name: chilled_water_production_report
+        description: Monthly chilled water production totals loaded from DataHub (columns item, amount).
+        columns:
+          - name: item
+            tests:
+              - not_null
+          - name: amount
+            tests:
+              - not_null
+      - name: electricity_consumption_pi
+        description: Building-level electricity consumption in KWH loaded from DataHub.
+      - name: steam_consumption_pi
+        description: Building-level steam consumption in lbs loaded from DataHub.
+      - name: chilled_water_consumption_pi
+        description: Building-level chilled water consumption in Ton-Hrs loaded from DataHub.
+      - name: mthw_consumption_pi
+        description: Building-level MTHW consumption in kBTU loaded from DataHub.
+        columns:
+          - name: final_bill_-_kbtu
+            tests:
+              - not_null
+      - name: assumed_rate
+        description: Conversion factors and assumed rates from DataHub assumed_rate.csv.

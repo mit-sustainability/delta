@@ -3,3 +3,25 @@ version: 2
 models:
   - name: _staging_placeholder
     description: Placeholder model for CSS staging layer structure.
+
+  - name: utility_cost_split
+    description: >
+      MMBTU-based common cost split for electricity, steam, MTHW, and chilled
+      water using March production totals. One row per utility type; join on
+      utility_type to allocate CUP common costs.
+    columns:
+      - name: utility_type
+        description: One of electricity, steam, mthw, chilled_water.
+        tests:
+          - not_null
+          - unique
+          - accepted_values:
+              values: [electricity, steam, mthw, chilled_water]
+      - name: mmbtu
+        description: Total production converted to MMBTU.
+        tests:
+          - not_null
+      - name: pct
+        description: Percentage share of total MMBTU across all utility types.
+        tests:
+          - not_null

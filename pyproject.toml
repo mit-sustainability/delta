@@ -17,6 +17,8 @@ dependencies = [
     "dbt-snowflake",
     "dbt-postgres",
     "pandas",
+    "openpyxl",
+    "tenacity",
 ]
 
 [project.optional-dependencies]

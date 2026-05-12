@@ -52,12 +52,12 @@ models:
       +tags:
         - domain:css
       staging:
-        +schema: "{{ env_var('DBT_SCHEMA_CSS_TRANSFORM', 'rpt_css') }}"
+        +schema: "{{ env_var('DBT_SCHEMA_CSS_TRANSFORM', env_var('DBT_SCHEMA_TRANSFORM', 'rpt_css')) }}"
         +tags:
           - staging
         +materialized: view
       final:
-        +schema: "{{ env_var('DBT_SCHEMA_CSS_TRANSFORM', 'rpt_css') }}"
+        +schema: "{{ env_var('DBT_SCHEMA_CSS_TRANSFORM', env_var('DBT_SCHEMA_TRANSFORM', 'rpt_css')) }}"
         +tags:
           - final
         +materialized: view

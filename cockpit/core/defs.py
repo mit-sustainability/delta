@@ -7,7 +7,7 @@ from ..shared.resources import build_warehouse_io_manager
 from .assets import core_assets
 from .jobs import core_jobs
 
-warehouse_target = os.getenv("WAREHOUSE_TARGET", os.getenv("DBT_TARGET", "local"))
+warehouse_target = os.getenv("DBT_TARGET", "local")
 
 core_defs = Definitions(
     assets=core_assets,

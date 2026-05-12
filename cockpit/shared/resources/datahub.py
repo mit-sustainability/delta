@@ -7,7 +7,8 @@ from io import BytesIO, IOBase, StringIO
 
 import pandas as pd
 import requests
-from dagster import get_dagster_logger
+from dagster import ConfigurableResource, get_dagster_logger
+from pydantic import PrivateAttr
 from requests.exceptions import SSLError
 from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_fixed
 
@@ -61,30 +62,29 @@ def data_hub_authorize(auth_token):
         return
 
 
-class DataHubResource:
+class DataHubResource(ConfigurableResource):
     """This resource contains methods interacting with MIT Data Hub API"""
 
-    def __init__(self, auth_token):
-        logger.info("Instantiate the DHub resource")
-        self.auth_token = auth_token
-        self.api_endpoint = "https://data.mit.edu/api"
-        self.jwt = None
-        self.headers = {"accept": "application/json"}
+    auth_token: str
+
+    _jwt: str | None = PrivateAttr(default=None)
+    _headers: dict = PrivateAttr(default_factory=lambda: {"accept": "application/json"})
+    _api_endpoint: str = PrivateAttr(default="https://data.mit.edu/api")
 
     def _ensure_authorized(self):
-        if self.jwt:
+        if self._jwt:
             return
-        self.jwt = data_hub_authorize(self.auth_token)
-        self.headers = {
+        self._jwt = data_hub_authorize(self.auth_token)
+        self._headers = {
             "accept": "application/json",
-            "Authorization": f"Bearer {self.jwt}",
+            "Authorization": f"Bearer {self._jwt}",
         }
 
     def list_projects(self):
         """Return a list of projects the user has access to."""
         self._ensure_authorized()
-        url = f"{self.api_endpoint}/user"
-        res = requests.get(url, headers=self.headers, timeout=default_timeout)
+        url = f"{self._api_endpoint}/user"
+        res = requests.get(url, headers=self._headers, timeout=default_timeout)
         if res.status_code == 200:
             logger.info("Successfully connected to Data Hub")
             return res.json()["data"]["projects"]
@@ -104,24 +104,32 @@ class DataHubResource:
     def get_download_link(self, file_id):
         """Return a download link for the file"""
         self._ensure_authorized()
-        url = f"{self.api_endpoint}/file/{file_id}"
-        res = requests.get(url, headers=self.headers, timeout=default_timeout)
+        url = f"{self._api_endpoint}/file/{file_id}"
+        res = requests.get(url, headers=self._headers, timeout=default_timeout)
         if res.status_code == 200:
             return res.json()["data"]["temporarily_download_url"]
         return None
 
-    def search_files_from_project(self, project_id, search_term, **kwargs):
+    def search_files_from_project(
+        self,
+        project_id: str,
+        search_term: str,
+        tags: list[str] | None = None,
+        **kwargs,
+    ):
         """Return a list of file download links matching the search term in the project"""
         self._ensure_authorized()
-        url = f"{self.api_endpoint}/search"
-        data = {
+        url = f"{self._api_endpoint}/search"
+        data: dict = {
             "term": search_term,
             "projects": [project_id],
             "paging": {"start": 0, "size": 50},
         }
+        if tags:
+            data["tags"] = tags
         # Allow advance search with additional parameters
         data.update(kwargs)
-        res = requests.post(url, headers=self.headers, json=data, timeout=default_timeout)
+        res = requests.post(url, headers=self._headers, json=data, timeout=default_timeout)
         if res.status_code != 200:
             logger.error(
                 f"Fail to find the file with name {search_term} in project {project_id} "
@@ -142,8 +150,8 @@ class DataHubResource:
     def get_upload_link(self, meta):
         """Get upload link to datahub"""
         self._ensure_authorized()
-        url = f"{self.api_endpoint}/file"
-        res = requests.post(url, headers=self.headers, json=meta, timeout=default_timeout)
+        url = f"{self._api_endpoint}/file"
+        res = requests.post(url, headers=self._headers, json=meta, timeout=default_timeout)
         if res.status_code == 200:
             return res.json()["data"]["temporarily_upload_url"]
 

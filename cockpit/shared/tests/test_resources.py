@@ -23,7 +23,6 @@ def test_dagster_definitions():
 
 def test_definitions_select_local_dbt_resource(monkeypatch):
     monkeypatch.setenv("DBT_TARGET", "local")
-    monkeypatch.delenv("WAREHOUSE_TARGET", raising=False)
 
     reloaded = importlib.reload(definitions_module)
     job_names = {job.name for job in reloaded.defs.jobs}
@@ -37,8 +36,7 @@ def test_definitions_select_local_dbt_resource(monkeypatch):
 
 
 def test_definitions_select_prod_dbt_resource(monkeypatch):
-    monkeypatch.setenv("DBT_TARGET", "local")
-    monkeypatch.setenv("WAREHOUSE_TARGET", "prod")
+    monkeypatch.setenv("DBT_TARGET", "prod")
 
     reloaded = importlib.reload(definitions_module)
     job_names = {job.name for job in reloaded.defs.jobs}

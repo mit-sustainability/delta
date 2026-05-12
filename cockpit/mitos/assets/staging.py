@@ -8,7 +8,7 @@ from ...shared.resources import PrefixTranslator
 
 @dbt_assets(
     manifest=delta_dbt_project.manifest_path,
-    select=f"path:{MITOS_SCOPE.dbt_path}",
+    select=MITOS_SCOPE.dbt_selector,
     dagster_dbt_translator=PrefixTranslator("postgres"),
 )
 def mitos_postgres_dbt_assets(context: AssetExecutionContext, dbt_postgres: DbtCliResource):
@@ -17,7 +17,7 @@ def mitos_postgres_dbt_assets(context: AssetExecutionContext, dbt_postgres: DbtC
 
 @dbt_assets(
     manifest=delta_dbt_project.manifest_path,
-    select=f"path:{MITOS_SCOPE.dbt_path}",
+    select=MITOS_SCOPE.dbt_selector,
     dagster_dbt_translator=PrefixTranslator("snowflake"),
 )
 def mitos_snowflake_dbt_assets(context: AssetExecutionContext, dbt_snowflake: DbtCliResource):

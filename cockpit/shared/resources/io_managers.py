@@ -9,9 +9,20 @@ from .snowflake import SnowflakeResource
 
 @dataclass(frozen=True)
 class WarehouseTable:
-    name: str
     columns: tuple[str, ...]
     rows: tuple[tuple[str, ...], ...]
+    name: str = ""
+
+    @classmethod
+    def from_dataframe(cls, df: Any, name: str = "") -> "WarehouseTable":
+        import pandas as pd
+
+        columns = tuple(df.columns.tolist())
+        rows = tuple(
+            tuple("" if pd.isna(v) else str(v) for v in row)
+            for row in df.itertuples(index=False, name=None)
+        )
+        return cls(name=name, columns=columns, rows=rows)
 
 
 class PostgresWarehouseIOManager(ConfigurableIOManager):
@@ -19,7 +30,8 @@ class PostgresWarehouseIOManager(ConfigurableIOManager):
 
     def handle_output(self, context, obj: WarehouseTable) -> None:
         warehouse = PostgresResource()
-        relation = self._relation(obj.name)
+        table_name = obj.name or context.asset_key.path[-1]
+        relation = self._relation(table_name)
 
         with warehouse.connect(schema=self.target_schema) as connection:
             cursor = connection.cursor()
@@ -44,7 +56,7 @@ class PostgresWarehouseIOManager(ConfigurableIOManager):
         context.add_output_metadata(
             {
                 "raw_schema": self.target_schema,
-                "raw_table": obj.name,
+                "raw_table": table_name,
                 "row_count": len(obj.rows),
                 "warehouse_kind": "postgres",
             }
@@ -68,7 +80,8 @@ class SnowflakeWarehouseIOManager(ConfigurableIOManager):
 
     def handle_output(self, context, obj: WarehouseTable) -> None:
         warehouse = SnowflakeResource()
-        relation = f"{self.target_schema.lower()}.{obj.name.lower()}"
+        table_name = obj.name or context.asset_key.path[-1]
+        relation = f"{self.target_schema.lower()}.{table_name.lower()}"
 
         with warehouse.connect(schema=self.target_schema) as connection:
             cursor = connection.cursor()
@@ -91,7 +104,7 @@ class SnowflakeWarehouseIOManager(ConfigurableIOManager):
         context.add_output_metadata(
             {
                 "raw_schema": self.target_schema,
-                "raw_table": obj.name,
+                "raw_table": table_name,
                 "row_count": len(obj.rows),
                 "warehouse_kind": "snowflake",
             }
