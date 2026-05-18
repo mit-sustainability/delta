@@ -1,14 +1,38 @@
 import io
+from datetime import date
 
 import pandas as pd
 import requests
-from dagster import AssetExecutionContext, AssetOut, Output, asset, multi_asset
+from dagster import AssetExecutionContext, AssetOut, Config, Output, asset, multi_asset
+from pydantic import Field
 
-from ...shared.resources import WarehouseTable
+from ...shared.resources import MITWarehouseResource, WarehouseTable
 from ...shared.resources.datahub import DataHubResource
 from ...shared.utils import normalize_column_name
 
 DATAHUB_PROJECT_NAME = "Utility Rate-setting"
+
+
+def _current_fiscal_period(today: date | None = None) -> str:
+    """Return fiscal period as YYYYPP string (e.g. '202611'). MIT FY starts July 1."""
+    d = today or date.today()
+    fiscal_year = d.year + 1 if d.month >= 7 else d.year
+    period = (d.month - 7) % 12 + 1
+    return f"{fiscal_year}{period:02d}"
+
+
+COST_COLLECTOR_IDS = [
+    "1802050", "1814000", "1814200",
+    "1814201", "1814202", "1814204",
+]
+
+
+
+class BalancesSummaryConfig(Config):
+    fiscal_period: str = Field(
+        default=_current_fiscal_period(),
+        description="Fiscal period as YYYYPP (e.g. 202611 for FY26 P11).",
+    )
 
 
 @multi_asset(
@@ -271,4 +295,46 @@ def mthw_consumption_pi(
     return Output(
         value=WarehouseTable.from_dataframe(mthw_res),
         metadata={"row_count": len(mthw_res)},
+    )
+
+
+@asset(
+    key_prefix=["css", "rate"],
+    group_name="css",
+    tags={"layer": "raw"},
+    io_manager_key="css_raw_io_manager",
+)
+def balances_summary(
+    context: AssetExecutionContext,
+    config: BalancesSummaryConfig,
+    mit_warehouse: MITWarehouseResource,
+) -> Output[WarehouseTable]:
+    placeholders = ", ".join(f":cc{i}" for i in range(len(COST_COLLECTOR_IDS)))
+    params = {"fp": config.fiscal_period, **{f"cc{i}": v for i, v in enumerate(COST_COLLECTOR_IDS)}}
+    query = f"""
+        SELECT
+            cc.COST_COLLECTOR_KEY,
+            cc.COST_COLLECTOR_ID,
+            cc.COST_COLLECTOR_NAME,
+            b.FYTD_EXPENSES,
+            b.WAREHOUSE_LOAD_DATE
+        FROM WAREUSER.COST_COLLECTOR cc
+        JOIN WAREUSER.BALANCES_SUMMARY b
+            ON b.COST_COLLECTOR_KEY = cc.COST_COLLECTOR_KEY
+        WHERE b.FISCAL_PERIOD = :fp
+          AND cc.COST_COLLECTOR_ID IN ({placeholders})
+    """
+
+    with mit_warehouse.connect() as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(query, params)
+            columns = tuple(col[0].lower() for col in cursor.description)
+            rows = tuple(
+                tuple("" if v is None else str(v) for v in row)
+                for row in cursor.fetchall()
+            )
+
+    return Output(
+        value=WarehouseTable(columns=columns, rows=rows),
+        metadata={"fiscal_period": config.fiscal_period, "row_count": len(rows)},
     )

@@ -5,10 +5,12 @@ from .io_managers import (
     WarehouseTable,
     build_warehouse_io_manager,
 )
+from .mit_warehouse import MITWarehouseResource
 from .postgres import PostgresResource
 from .snowflake import SnowflakeResource
 
 __all__ = [
+    "MITWarehouseResource",
     "PrefixTranslator",
     "PostgresResource",
     "SnowflakeResource",

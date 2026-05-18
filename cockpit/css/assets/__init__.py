@@ -2,6 +2,7 @@ from .raw import css_datahub_source
 from .staging import css_postgres_dbt_assets, css_snowflake_dbt_assets
 from .utility_rates import (
     assumed_rate,
+    balances_summary,
     chilled_water_residuals,
     electricity_residuals,
     mthw_consumption_pi,
@@ -15,6 +16,7 @@ css_assets = [
     chilled_water_residuals,
     mthw_consumption_pi,
     assumed_rate,
+    balances_summary,
 ]
 
 __all__ = [

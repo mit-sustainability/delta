@@ -3,7 +3,7 @@ import os
 from dagster import Definitions
 
 from ..scopes import CSS_SCOPE
-from ..shared.resources import build_warehouse_io_manager
+from ..shared.resources import MITWarehouseResource, build_warehouse_io_manager
 from ..shared.resources.datahub import DataHubResource
 from .assets import css_assets, css_postgres_dbt_assets, css_snowflake_dbt_assets
 from .jobs import css_job
@@ -25,5 +25,6 @@ css_defs = Definitions(
         "datahub": DataHubResource(
             auth_token=os.getenv("DATAHUB_API_KEY", ""),
         ),
+        "mit_warehouse": MITWarehouseResource(),
     },
 )

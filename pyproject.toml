@@ -18,6 +18,7 @@ dependencies = [
     "dbt-postgres",
     "pandas",
     "openpyxl",
+    "oracledb",
     "tenacity",
 ]
 

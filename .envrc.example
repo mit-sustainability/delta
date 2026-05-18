@@ -11,6 +11,15 @@ export DBT_THREADS=4
 # export MITOS_WAREHOUSE_SMOKE_SOURCE_SCHEMA=src_byod_core
 # export CSS_RAW_UPLOADS_SOURCE_SCHEMA=external_css_source_schema
 
+# MIT Oracle Data Warehouse
+export MIT_WHRS_HOST=warehouse.mit.edu
+export MIT_WHRS_PORT=1521
+export MIT_WHRS_USER=xxx
+export MIT_WHRS_PASSWORD=xxx
+export MIT_WHRS_SID=DWRHS
+# Override Oracle Instant Client path on local (ARM64 default: /opt/oracle/instantclient_23_26)
+# export ORACLE_CLIENT_LIB_DIR=/opt/oracle/instantclient_23_26
+
 # Dagster
 export DAGSTER_HOME="$(pwd)/.dagster"
 mkdir -p "$DAGSTER_HOME"
